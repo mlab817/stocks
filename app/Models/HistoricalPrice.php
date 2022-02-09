@@ -9,6 +9,29 @@ class HistoricalPrice extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'company_id',
+        'date',
+        'open',
+        'high',
+        'low',
+        'close',
+        'value',
+        'alma',
+        'macd',
+        'macd_signal',
+        'macd_hist',
+        'ma_20',
+        'ma_50',
+        'ma_100',
+        'ma_200',
+        'rsi',
+        'cci',
+        'atr',
+        'sts',
+        'williams_r'
+    ];
+
     protected $hidden = [
         'created_at',
         'updated_at',
