@@ -28,19 +28,19 @@ class HistoricalPricesImport implements ToCollection, WithHeadingRow, WithBatchI
                 'low' => $row['low'],
                 'close' => $row['close'],
                 'value' => $row['value'],
-                'alma' => $row['alma'] == 'NaN' ? null : $row['alma'],
-                'macd' => $row['macd'] == 'NaN' ? null : $row['macd'],
-                'macd_signal' => $row['macd_signal'] == 'NaN' ? null : $row['macd_signal'],
-                'macd_hist' => $row['macd_hist'] == 'NaN' ? null : $row['macd_hist'],
-                'ma_20' => $row['ma_20'] == 'NaN' ? null : $row['ma_20'],
-                'ma_50' => $row['ma_50'] == 'NaN' ? null : $row['ma_50'],
-                'ma_100' => $row['ma_100'] == 'NaN' ? null : $row['ma_100'],
-                'ma_200' => $row['ma_200'] == 'NaN' ? null : $row['ma_200'],
-                'rsi' => $row['rsi'] == 'NaN' ? null : $row['rsi'],
-                'cci' => $row['cci'] == 'NaN' ? null : $row['cci'],
-                'atr' => $row['atr'] == 'NaN' ? null : $row['atr'],
-                'sts' => $row['sts'] == 'NaN' ? null : $row['sts'],
-                'williams_r' => $row['williams_r'] == 'NaN' ? null : $row['williams_r']
+                'alma' => $row['alma'] == 'nan' ? null : $row['alma'],
+                'macd' => $row['macd'] == 'nan' ? null : $row['macd'],
+                'macd_signal' => $row['macd_signal'] == 'nan' ? null : $row['macd_signal'],
+                'macd_hist' => $row['macd_hist'] == 'nan' ? null : $row['macd_hist'],
+                'ma_20' => $row['ma_20'] == 'nan' ? null : $row['ma_20'],
+                'ma_50' => $row['ma_50'] == 'nan' ? null : $row['ma_50'],
+                'ma_100' => $row['ma_100'] == 'nan' ? null : $row['ma_100'],
+                'ma_200' => $row['ma_200'] == 'nan' ? null : $row['ma_200'],
+                'rsi' => $row['rsi'] == 'nan' ? null : $row['rsi'],
+                'cci' => $row['cci'] == 'nan' ? null : $row['cci'],
+                'atr' => $row['atr'] == 'nan' ? null : $row['atr'],
+                'sts' => $row['sts'] == 'nan' ? null : $row['sts'],
+                'williams_r' => $row['williams_r'] == 'nan' ? null : $row['williams_r']
             ]);
         }
     }

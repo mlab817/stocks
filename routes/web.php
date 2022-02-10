@@ -31,3 +31,17 @@ Route::get('/mama', function () {
 
     return view('prices', compact('prices'));
 });
+
+Route::get('/upload', function () {
+    return view('upload');
+})->name('upload.show');
+
+Route::post('/upload', function (\Illuminate\Http\Request $request) {
+    $file = $request->file('file');
+
+    (new \App\Imports\HistoricalPricesImport)
+        ->import($file, '', \Maatwebsite\Excel\Excel::CSV);
+
+    return back();
+
+})->name('upload.post');
