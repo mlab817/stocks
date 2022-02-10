@@ -52,8 +52,11 @@ class HistoricalPrice extends Model
         return $this->belongsTo(Company::class);
     }
 
-    public function getRiskAttribute(): float
+    public function getRiskAttribute()
     {
-        return number_format(($this->close - $this->alma) / $this->close * 100, 2);
+        // commission = 1.195
+        return $this->low > $this->alma
+            ? number_format(($this->close - $this->alma) / $this->close * 100 + 1.195, 2)
+            : '-';
     }
 }

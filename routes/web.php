@@ -13,9 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::redirect('/', '/home');
 
 Auth::routes();
 
@@ -28,7 +26,7 @@ Route::resource('trades',\App\Http\Controllers\TradeController::class);
 Route::get('/mama', function () {
     $prices = \App\Models\HistoricalPrice::with('company')
         ->where('date',\Carbon\Carbon::today())
-        ->orderBy('value','desc')
+        ->orderBy('company_id','asc')
         ->get();
 
     return view('prices', compact('prices'));

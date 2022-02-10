@@ -2,10 +2,12 @@
 
 @section('content')
     <div class="container">
-        <div class="form-floating">
-            <input type="search" name="search" id="search" class="form-control" placeholder="Enter text to search...">
-            <label for="search">Search</label>
-        </div>
+        <form action="{{ route('companies.index') }}" method="get">
+            <div class="form-floating">
+                <input type="search" value="{{ request()->query('search') }}" name="search" id="search" class="form-control" placeholder="Enter text to search...">
+                <label for="search">Search</label>
+            </div>
+        </form>
 
         <table class="table table-responsive">
             <thead>

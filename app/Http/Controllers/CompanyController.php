@@ -13,9 +13,18 @@ class CompanyController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $companies = Company::orderBy('symbol')->get();
+        $search = $request->search;
+
+        $companies = Company::query();
+
+        if ($search) {
+            $companies = $companies->where('symbol',strtoupper($search))
+                ->orWhere('name', strtoupper($search));
+        }
+
+        $companies = $companies->orderBy('symbol')->get();
 
         return view('companies.index', compact('companies'));
     }
