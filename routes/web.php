@@ -19,8 +19,8 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::resource('companies.historical_prices', \App\Http\Controllers\HistoricalPriceController::class);
-Route::resource('companies',\App\Http\Controllers\CompanyController::class);
+Route::resource('companies', \App\Http\Controllers\CompanyController::class);
+Route::delete('/historical_prices/{historical_price}', [\App\Http\Controllers\HistoricalPriceController::class,'destroy'])->name('historical_prices.destroy');
 Route::resource('trades',\App\Http\Controllers\TradeController::class);
 
 Route::get('/mama', function () {

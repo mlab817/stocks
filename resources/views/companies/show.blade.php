@@ -26,6 +26,7 @@
                 <th>ALMA</th>
                 <th>MACD Hist</th>
                 <th>MAMA</th>
+                <th>Action</th>
             </tr>
             </thead>
             <tbody>
@@ -41,6 +42,13 @@
                         {!! is_null($price->alma) ? '' : ($price->low > $price->alma ? $bullish : $bearish) !!}</td>
                     <td>{{ number_format($price->macd_hist, 2) }} <br/> {!! is_null($price->macd_hist) ? '' : ($price->macd_hist > 0 ? $bullish : $bearish) !!}</td>
                     <td>{!! (!is_null($price->alma) && $price->low > $price->alma && $price->macd_hist > 0) ? $bullish : $bearish  !!}</td>
+                    <td>
+                        <form action="{{ route('historical_prices.destroy', $price) }}" method="POST">
+                            @method('delete')
+                            @csrf
+                            <input type="submit" class="btn btn-danger" value="Delete">
+                        </form>
+                    </td>
                 </tr>
             @endforeach
             </tbody>
