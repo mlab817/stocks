@@ -38,7 +38,7 @@ class HistoricalPricesImport implements ToCollection, WithHeadingRow, WithBatchI
                 'ma_200' => $row['ma_200'] == 'nan' ? null : $row['ma_200'],
                 'rsi' => $row['rsi'] == 'nan' ? null : $row['rsi'],
                 'cci' => $row['cci'] == 'nan' ? null : $row['cci'],
-                'atr' => $row['atr'] == 'nan' ? null : $row['atr'],
+                'atr' => $row['atr'] == 'NULL' ? null : $row['atr'],
                 'sts' => $row['sts'] == 'nan' ? null : $row['sts'],
                 'williams_r' => $row['williams_r'] == 'nan' ? null : $row['williams_r']
             ]);
