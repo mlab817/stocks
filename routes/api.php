@@ -17,3 +17,9 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('/companies/{company}/historical_prices', function ($company) {
+    $company = \App\Models\Company::where('symbol', $company)->first();
+
+    return response()->json($company->prices()->select('date','open','high','low','close','value')->orderBy('date','asc')->get());
+})->name('api.get_prices');

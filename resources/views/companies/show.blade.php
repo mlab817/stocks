@@ -74,117 +74,119 @@
     <script src="https://code.highcharts.com/stock/modules/hollowcandlestick.js"></script>
 
     <script>
-        const data = @json($company->prices()->orderBy('date','asc')->get())
-
-        // Highcharts.getJSON('https://demo-live-data.highcharts.com/aapl-ohlcv.json', function (data) {
-
-            // split the data set into ohlc and volume
-            var ohlc = [],
-                value = [],
-                alma = [],
-                dataLength = data.length,
-                // set the allowed units for data grouping
-                groupingUnits = [[
-                    'week',                         // unit name
-                    [1]                             // allowed multiples
-                ], [
-                    'month',
-                    [1, 2, 3, 4, 6]
-                ]],
-
-                i = 0;
-
-            for (i; i < dataLength; i += 1) {
-                alma.push([
-                    data[i].date * 1000, // the date
-                    data[i].alma, // open
-                ])
-
-                ohlc.push([
-                    data[i].date * 1000, // the date
-                    data[i].open, // open
-                    data[i].high, // high
-                    data[i].low, // low
-                    data[i].close // close
-                ]);
-
-                value.push([
-                    data[i].date * 1000, // the date
-                    data[i].value // the volume
-                ]);
-            }
 
             // create the chart
-            Highcharts.stockChart('container', {
+            Highcharts.getJSON('{{ route('api.get_prices', $company->symbol) }}', function (data) {
+                let ohlc = [],
+                    value = [],
+                    alma = [],
+                    dataLength = data.length,
+                    // set the allowed units for data grouping
+                    groupingUnits = [[
+                        'week',                         // unit name
+                        [1]                             // allowed multiples
+                    ], [
+                        'month',
+                        [1, 2, 3, 4, 6]
+                    ]],
 
-                rangeSelector: {
-                    selected: 1
-                },
+                    i = 0;
 
-                title: {
-                    text: '{{ $company->name }}'
-                },
+                for (i; i < dataLength; i += 1) {
+                    alma.push([
+                        data[i].date * 1000, // the date
+                        data[i].alma, // open
+                    ])
 
-                yAxis: [{
-                    labels: {
-                        align: 'right',
-                        x: -3
+                    ohlc.push([
+                        data[i].date * 1000, // the date
+                        data[i].open, // open
+                        data[i].high, // high
+                        data[i].low, // low
+                        data[i].close // close
+                    ]);
+
+                    value.push([
+                        data[i].date * 1000, // the date
+                        data[i].value // the volume
+                    ]);
+                }
+
+                console.log(ohlc)
+
+                Highcharts.stockChart('container', {
+
+                    rangeSelector: {
+                        selected: 1
                     },
+
                     title: {
-                        text: 'OHLC'
+                        text: '{{ $company->name }}'
                     },
-                    height: '60%',
-                    lineWidth: 2,
-                    resize: {
-                        enabled: true
-                    }
-                }, {
-                    labels: {
-                        align: 'right',
-                        x: -3
-                    },
-                    title: {
-                        text: 'Volume'
-                    },
-                    top: '65%',
-                    height: '35%',
-                    offset: 0,
-                    lineWidth: 2
-                }],
 
-                tooltip: {
-                    split: true
-                },
+                    yAxis: [{
+                        labels: {
+                            align: 'right',
+                            x: -3
+                        },
+                        title: {
+                            text: 'OHLC'
+                        },
+                        height: '60%',
+                        lineWidth: 2,
+                        resize: {
+                            enabled: true
+                        }
+                    }, {
+                        labels: {
+                            align: 'right',
+                            x: -3
+                        },
+                        title: {
+                            text: 'Volume'
+                        },
+                        top: '65%',
+                        height: '35%',
+                        offset: 0,
+                        lineWidth: 2
+                    }],
 
-                series: [{
-                    type: 'candlestick',
-                    id: '{{ $company->symbol }}',
-                    name: '{{ $company->symbol }}',
-                    data: ohlc,
-                    dataGrouping: {
-                        units: groupingUnits
+                    tooltip: {
+                        split: true
                     },
-                    upColor: '#52a39a',
-                    color: '#dd5e56',
-                }, {
-                    type: 'column',
-                    name: 'Value',
-                    data: value,
-                    yAxis: 1,
-                    dataGrouping: {
-                        units: groupingUnits
-                    }
-                }, {
-                    type: 'line',
-                    name: 'ALMA',
-                    data: alma,
-                    yAxis: 0,
-                    dataGrouping: {
-                        units: groupingUnits
-                    },
-                    color: '#fdec60'
-                }],
-            });
+
+                    series: [{
+                        type: 'candlestick',
+                        id: '{{ $company->symbol }}',
+                        name: '{{ $company->symbol }}',
+                        data: ohlc,
+                        dataGrouping: {
+                            units: groupingUnits
+                        },
+                        upColor: '#52a39a',
+                        color: '#dd5e56',
+                    }, {
+                        type: 'column',
+                        name: 'Value',
+                        data: value,
+                        yAxis: 1,
+                        dataGrouping: {
+                            units: groupingUnits
+                        }
+                    }, {
+                        type: 'line',
+                        name: 'ALMA',
+                        data: alma,
+                        yAxis: 0,
+                        dataGrouping: {
+                            units: groupingUnits
+                        },
+                        color: '#fdec60'
+                    }],
+                });
+            })
+
+
         // });
     </script>
 @endpush
