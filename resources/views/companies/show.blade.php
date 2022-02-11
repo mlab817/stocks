@@ -158,6 +158,7 @@
 
                 series: [{
                     type: 'candlestick',
+                    id: '{{ $company->symbol }}',
                     name: '{{ $company->symbol }}',
                     data: ohlc,
                     dataGrouping: {
