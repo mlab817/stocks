@@ -20,10 +20,15 @@ class HistoricalPriceController extends Controller
         return view('companies.prices.index', compact('prices'));
     }
 
-    public function destroy(HistoricalPrice $price)
+    public function destroy($id)
     {
-        $price->delete();
+        $price = HistoricalPrice::findOrFail($id);
 
-        return back();
+        if ($price->delete()) {
+            return back()
+                ->with('success','Successfully deleted');
+        }
+
+        return 'Something went wrong';
     }
 }
