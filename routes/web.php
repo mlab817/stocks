@@ -34,7 +34,7 @@ Route::get('/mama', function () {
         ->get();
 
     return view('prices', compact('prices'));
-});
+})->name('mama');
 
 Route::get('/upload', function () {
     return view('upload');
