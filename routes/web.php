@@ -24,8 +24,12 @@ Route::delete('/historical_prices/{historical_price}', [\App\Http\Controllers\Hi
 Route::resource('trades',\App\Http\Controllers\TradeController::class);
 
 Route::get('/mama', function () {
+    $latestDate = \Illuminate\Support\Facades\DB::table('historical_prices')
+        ->selectRaw('MAX(date) as latest_date')
+        ->first();
+
     $prices = \App\Models\HistoricalPrice::with('company')
-        ->where('date',\Carbon\Carbon::today())
+        ->where('date', $latestDate->latest_date)
         ->orderBy('company_id','asc')
         ->get();
 

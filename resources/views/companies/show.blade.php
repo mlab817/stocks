@@ -117,7 +117,22 @@
                 Highcharts.stockChart('container', {
 
                     rangeSelector: {
-                        selected: 1
+                        selected: 0
+                    },
+
+                    plotOptions: {
+                        macd: {
+                            macdLine: {
+                                styles: {
+                                    lineColor: '#0000ff'
+                                }
+                            },
+                            signalLine: {
+                                styles: {
+                                    lineColor: '#ff0000'
+                                }
+                            }
+                        }
                     },
 
                     title: {
@@ -143,7 +158,7 @@
                             x: -3
                         },
                         title: {
-                            text: 'Volume'
+                            text: 'MACD'
                         },
                         top: '65%',
                         height: '35%',
@@ -165,15 +180,17 @@
                         },
                         upColor: '#52a39a',
                         color: '#dd5e56',
-                    }, {
-                        type: 'column',
-                        name: 'Value',
-                        data: value,
-                        yAxis: 1,
-                        dataGrouping: {
-                            units: groupingUnits
-                        }
-                    }, {
+                    },
+                    // {
+                    //     type: 'column',
+                    //     name: 'Value',
+                    //     data: value,
+                    //     // yAxis: 0,
+                    //     dataGrouping: {
+                    //         units: groupingUnits
+                    //     }
+                    // },
+                    {
                         type: 'line',
                         name: 'ALMA',
                         data: alma,
@@ -182,6 +199,10 @@
                             units: groupingUnits
                         },
                         color: '#fdec60'
+                    }, {
+                        type: 'macd',
+                        linkedTo: '{{ $company->symbol }}',
+                        yAxis: 1
                     }],
                 });
             })
