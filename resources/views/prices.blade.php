@@ -7,9 +7,21 @@
 
 @section('content')
     <div class="container-lg">
-        <h2 class="mt-2 mb-5">Prices as of {{ \Carbon\Carbon::createFromTimestamp($prices->max('date'))->format('M d, Y') }}</h2>
+        <h2 class="mt-2 mb-5">MAMA Status as of {{ \Carbon\Carbon::createFromTimestamp($prices->max('date'))->format('M d, Y') }}</h2>
 
-        <table class="table" id="data">
+        <div class="mb-5">
+            This list shows stocks that meet the following criteria:
+            <ol>
+                <li><strong>Bullish ALMA:</strong> Lowest price of the day is greater than ALMA.</li>
+                <li><strong>Bullish MACD:</strong> MACD Line is greater than Signal Line. ()</li>
+                <li><strong>Bullish volume:</strong> Value of trade is greater than P1 million</li>
+                <li><strong>Tolerable risk:</strong> Risk (close price vs. ALMA) including fees of 1.195% is less than 5%.</li>
+            </ol>
+
+            <em>Note: This list does not capture when the MACD cross happened.</em>
+        </div>
+
+        <table class="table mt-5" id="data">
             <thead>
                 <tr>
                     <th>ID</th>

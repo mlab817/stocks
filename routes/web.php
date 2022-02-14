@@ -23,18 +23,7 @@ Route::resource('companies', \App\Http\Controllers\CompanyController::class);
 Route::delete('/historical_prices/{historical_price}', [\App\Http\Controllers\HistoricalPriceController::class,'destroy'])->name('historical_prices.destroy');
 Route::resource('trades',\App\Http\Controllers\TradeController::class);
 
-Route::get('/mama', function () {
-    $latestDate = \Illuminate\Support\Facades\DB::table('historical_prices')
-        ->selectRaw('MAX(date) as latest_date')
-        ->first();
-
-    $prices = \App\Models\HistoricalPrice::with('company')
-        ->where('date', $latestDate->latest_date)
-        ->orderBy('company_id','asc')
-        ->get();
-
-    return view('prices', compact('prices'));
-})->name('mama');
+Route::get('/mama', \App\Http\Controllers\MamaController::class)->name('mama');
 
 Route::get('/upload', function () {
     return view('upload');
