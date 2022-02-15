@@ -25,6 +25,8 @@ Route::resource('trades',\App\Http\Controllers\TradeController::class);
 
 Route::get('/mama', \App\Http\Controllers\MamaController::class)->name('mama');
 
+Route::get('/bopis', \App\Http\Controllers\BopisController::class)->name('bopis');
+
 Route::get('/upload', function () {
     return view('upload');
 })->name('upload.show');

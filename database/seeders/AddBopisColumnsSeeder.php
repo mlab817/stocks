@@ -18,7 +18,7 @@ class AddBopisColumnsSeeder extends Seeder
     {
         DB::disableQueryLog();
 
-        for ($i = 1; $i <= 278; $i++) {
+        for ($i = 15; $i <= 278; $i++) {
 
             $file = fopen(database_path('csv/stock_' . $i . '.csv'), 'r');
             $header = true;
@@ -29,12 +29,15 @@ class AddBopisColumnsSeeder extends Seeder
                 if ($header) {
                     $header = false;
                 } else {
+                    $trix = floatval($csvLine[2]) > 10**18 ? null: (! floatval($csvLine[2]) ? null : floatval($csvLine[2]));
+                    $psar = floatval($csvLine[3]) > 10**18 ? null: (! floatval($csvLine[3]) ? null : floatval($csvLine[3]));
+                    $ema_9    = floatval($csvLine[4]) > 10**18 ? null: (! floatval($csvLine[4]) ? null : floatval($csvLine[4]));
                     HistoricalPrice::where('company_id', $csvLine[0])
                         ->where('date', $csvLine[1])
                         ->update([
-                            'trix' => floatval($csvLine[2]) ?? null,
-                            'psar' => floatval($csvLine[3]) ?? null,
-                            'ema_9' => floatval($csvLine[4]) ?? null,
+                            'trix' => $trix,
+                            'psar' => $psar,
+                            'ema_9' => $ema_9,
                         ]);
                 }
 
