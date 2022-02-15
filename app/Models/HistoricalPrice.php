@@ -31,7 +31,10 @@ class HistoricalPrice extends Model
         'cci',
         'atr',
         'sts',
-        'williams_r'
+        'williams_r',
+        'trix',
+        'psar',
+        'ema_9'
     ];
 
     protected $hidden = [

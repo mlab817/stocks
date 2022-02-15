@@ -7,14 +7,13 @@
 
 @section('content')
     <div class="container-lg">
-        <h2 class="mt-2 mb-5">BOPIS Status as of {{ \Carbon\Carbon::createFromTimestamp($prices->max('date'))->format('M d, Y') }}</h2>
+        <h2 class="mt-2 mb-5">BOPIS Status as of {{ \Carbon\Carbon::createFromFormat('Y-m-d', $latest_date)->format('M d, Y') }}</h2>
 
         <div class="mb-5">
             This list shows stocks that meet the following criteria:
             <ol>
-                <li><strong>Bullish Parabolic SAR:</strong> Lowest price of the day is greater than Parabolic SAR.</li>
-                <li><strong>Bullish EMA 9:</strong> Lowest price is greater than EMA (9).</li>
-                <li><strong>Bullish TRIX:</strong> TRIX about to cross 0 or above 0.</li>
+                <li><strong>Bullish RSI:</strong> RSI is either 50 or 55.</li>
+                <li><strong>Bullish ALMA:</strong> Lowest price is greater than ALMA.</li>
             </ol>
         </div>
 
@@ -27,9 +26,8 @@
                 <th class="text-center">High</th>
                 <th class="text-center">Low</th>
                 <th class="text-center">Close</th>
-                <th class="text-center">TRIX</th>
-                <th class="text-center">Parabolic SAR</th>
-                <th class="text-center">EMA (9)</th>
+                <th class="text-center">RSI</th>
+                <th class="text-center">ALMA</th>
                 <th class="text-center">Value</th>
                 <th class="text-center">Risk (%)</th>
             </tr>
@@ -47,11 +45,8 @@
                     <td class="text-center">{{ $price->high }}</td>
                     <td class="text-center">{{ $price->low }}</td>
                     <td class="text-center">{{ $price->close }}</td>
-                    <td class="text-center">{{ $price->psar }} <br/>
-                        {!! $price->low > $price->psar ? $bullish : $bearish !!}
-                    </td>
-                    <td class="text-center">{{ $price->low }} <br/>
-                        {!! $price->low > $price->ema_9 ? $bullish : $bearish !!}
+                    <td class="text-center">{{ $price->rsi }} <br/>
+                        {!! $price->rsi == 50 || $price->rsi == 55 ? $bullish : $bearish !!}
                     </td>
                     <td class="text-center">
                         {{ $price->trix }} <br/>

@@ -27,6 +27,8 @@ Route::get('/mama', \App\Http\Controllers\MamaController::class)->name('mama');
 
 Route::get('/bopis', \App\Http\Controllers\BopisController::class)->name('bopis');
 
+Route::get('/tita', \App\Http\Controllers\TitaController::class)->name('tita');
+
 Route::get('/upload', function () {
     return view('upload');
 })->name('upload.show');
