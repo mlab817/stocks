@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Company extends Model
 {
@@ -29,12 +30,13 @@ class Company extends Model
 
     public function prices()
     {
-        return $this->hasMany(HistoricalPrice::class);
+        return $this->hasMany(HistoricalPrice::class)
+            ->orderBy('date','ASC');
     }
 
-    public function latest_price()
+    public function latest_price(): HasOne
     {
         return $this->hasOne(HistoricalPrice::class)
-            ->orderByDesc('date');
+            ->latestOfMany();
     }
 }

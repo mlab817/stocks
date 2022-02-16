@@ -24,10 +24,10 @@ class MamaController extends Controller
             ->get();
 
         $prices = $prices->filter(function ($price) {
-            return $price->low > $price->alma
-                && $price->macd_hist > 0
-                && $price->value > 10**6
-                && ($price->close / $price->alma) + 0.01195 < 1.05;
+            return $price->alma_bullish
+                && $price->macd_bullish
+                && $price->value_bullish
+                && $price->risk_bullish;
         });
 
         return view('prices', compact('prices'));

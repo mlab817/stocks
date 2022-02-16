@@ -34,7 +34,8 @@ class HistoricalPrice extends Model
         'williams_r',
         'trix',
         'psar',
-        'ema_9'
+        'ema_9',
+        'pct_change',
     ];
 
     protected $hidden = [
@@ -50,11 +51,36 @@ class HistoricalPrice extends Model
         'close' => 'float',
         'value' => 'float',
         'alma' => 'float',
+        'macd' => 'float',
+        'macd_signal' => 'float',
+        'macd_hist' => 'float',
+        'ma_20' => 'float',
+        'ma_50' => 'float',
+        'ma_100' => 'float',
+        'ma_200' => 'float',
+        'rsi' => 'float',
+        'cci' => 'float',
+        'atr' => 'float',
+        'sts' => 'float',
+        'williams_r' => 'float',
+        'trix' => 'float',
+        'psar' => 'float',
+        'ema_9' => 'float',
     ];
 
     public function company()
     {
         return $this->belongsTo(Company::class);
+    }
+
+    public function getAlmaBullishAttribute(): bool
+    {
+        return $this->low > $this->alma;
+    }
+
+    public function getMacdBullishAttribute(): bool
+    {
+        return $this->macd_hist > 0;
     }
 
     public function getRiskAttribute()
@@ -63,5 +89,15 @@ class HistoricalPrice extends Model
         return $this->low > $this->alma
             ? number_format(($this->close - $this->alma) / $this->close * 100 + 1.195, 2)
             : '-';
+    }
+
+    public function getRiskBullishAttribute(): bool
+    {
+        return floatval($this->risk) < 5;
+    }
+
+    public function getValueBullishAttribute(): bool
+    {
+        return $this->value > 10 **6;
     }
 }

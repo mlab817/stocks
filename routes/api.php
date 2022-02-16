@@ -23,3 +23,9 @@ Route::get('/companies/{company}/historical_prices', function ($company) {
 
     return response()->json($company->prices()->select('date','open','high','low','close','value','alma')->orderBy('date','asc')->get());
 })->name('api.get_prices');
+
+Route::get('/companies/{company}', function ($company) {
+    $company = \App\Models\Company::where('symbol', $company)->first();
+
+    return new \App\Http\Resources\CompanyResource($company->load('prices'));
+});

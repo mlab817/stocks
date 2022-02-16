@@ -2,14 +2,7 @@
 
 @section('content')
     <div class="container">
-        <form action="{{ route('companies.index') }}" method="get">
-            <div class="form-floating">
-                <input type="search" value="{{ request()->query('search') }}" name="search" id="search" class="form-control" placeholder="Enter text to search...">
-                <label for="search">Search</label>
-            </div>
-        </form>
-
-        <table class="table table-responsive">
+        <table class="table table-responsive" id="data">
             <thead>
                 <tr>
                     <th>Name</th>
@@ -17,7 +10,7 @@
                     <th>Listing Date</th>
                     <th>Sector</th>
                     <th>Subsector</th>
-                    <th>Active</th>
+                    <th>Last Price</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -42,7 +35,7 @@
                             {{ $company->subsector->label }}
                         </td>
                         <td>
-                            {{ $company->active }}
+                            {{ number_format(optional($company->latest_price)->close, 2) }}
                         </td>
                         <td>
                             <a href="{{ route('companies.edit', $company) }}" class="btn btn-primary">Edit</a>
@@ -53,3 +46,16 @@
         </table>
     </div>
 @endsection
+
+
+@push('scripts')
+    <link rel="stylesheet" href="//cdn.datatables.net/1.11.4/css/jquery.dataTables.min.css">
+    <script src="//code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="//cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+
+    <script>
+        $(document).ready( function () {
+            $('#data').DataTable();
+        });
+    </script>
+@endpush
