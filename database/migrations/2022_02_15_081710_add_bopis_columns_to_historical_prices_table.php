@@ -14,9 +14,9 @@ class AddBopisColumnsToHistoricalPricesTable extends Migration
     public function up()
     {
         Schema::table('historical_prices', function (Blueprint $table) {
-            $table->decimal('trix', 20, 2)->nullable();
-            $table->decimal('psar', 20, 2)->nullable();
-            $table->decimal('ema_9', 20, 2)->nullable();
+            $table->decimal('trix', 30, 4)->nullable();
+            $table->decimal('psar', 30, 4)->nullable();
+            $table->decimal('ema_9', 30, 4)->nullable();
         });
     }
 

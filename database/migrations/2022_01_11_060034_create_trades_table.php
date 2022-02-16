@@ -20,12 +20,12 @@ class CreateTradesTable extends Migration
             $table->foreignId('company_id')->constrained()->cascadeOnDelete();
             $table->unsignedBigInteger('shares')->default(0);
             $table->date('date');
-            $table->decimal('price',10,2)->default(0);
-            $table->decimal('commission',10,2)->default(0);
-            $table->decimal('vat',10,2)->default(0);
-            $table->decimal('sales_tax',10,2)->default(0);
-            $table->decimal('sccp_fee',10,2)->default(0);
-            $table->decimal('pse_fee',10,2)->default(0);
+            $table->decimal('price',30,4)->default(0);
+            $table->decimal('commission',30,4)->default(0);
+            $table->decimal('vat',30,4)->default(0);
+            $table->decimal('sales_tax',30,4)->default(0);
+            $table->decimal('sccp_fee',30,4)->default(0);
+            $table->decimal('pse_fee',30,4)->default(0);
             $table->timestamps();
         });
     }

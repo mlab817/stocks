@@ -17,11 +17,11 @@ class CreateHistoricalPricesTable extends Migration
             $table->id();
             $table->foreignId('company_id')->constrained()->cascadeOnDelete();
             $table->date('date');
-            $table->decimal('open',20,2)->default(0);
-            $table->decimal('high',20,2)->default(0);
-            $table->decimal('low',20,2)->default(0);
-            $table->decimal('close',20,2)->default(0);
-            $table->decimal('value',20,2)->default(0);
+            $table->decimal('open',30,4)->default(0);
+            $table->decimal('high',30,4)->default(0);
+            $table->decimal('low',30,4)->default(0);
+            $table->decimal('close',30,4)->default(0);
+            $table->decimal('value',30,4)->default(0);
             $table->timestamps();
         });
     }

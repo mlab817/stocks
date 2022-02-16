@@ -14,19 +14,19 @@ class AddIndicatorColumnsToHistoricalPricesTable extends Migration
     public function up()
     {
         Schema::table('historical_prices', function (Blueprint $table) {
-            $table->decimal('alma', 20, 2)->nullable();
-            $table->decimal('macd', 20, 2)->nullable();
-            $table->decimal('macd_signal', 20, 2)->nullable();
-            $table->decimal('macd_hist', 20, 2)->nullable();
-            $table->decimal('ma_20', 20, 2)->nullable();
-            $table->decimal('ma_50', 20, 2)->nullable();
-            $table->decimal('ma_100', 20, 2)->nullable();
-            $table->decimal('ma_200', 20, 2)->nullable();
-            $table->decimal('rsi', 20, 2)->nullable();
-            $table->decimal('cci', 20, 2)->nullable();
-            $table->decimal('atr', 20, 2)->nullable();
-            $table->decimal('sts', 20, 2)->nullable();
-            $table->decimal('williams_r', 20, 2)->nullable();
+            $table->decimal('alma', 30, 4)->nullable();
+            $table->decimal('macd', 30, 4)->nullable();
+            $table->decimal('macd_signal', 30, 4)->nullable();
+            $table->decimal('macd_hist', 30, 4)->nullable();
+            $table->decimal('ma_20', 30, 4)->nullable();
+            $table->decimal('ma_50', 30, 4)->nullable();
+            $table->decimal('ma_100', 30, 4)->nullable();
+            $table->decimal('ma_200', 30, 4)->nullable();
+            $table->decimal('rsi', 30, 4)->nullable();
+            $table->decimal('cci', 30, 4)->nullable();
+            $table->decimal('atr', 30, 4)->nullable();
+            $table->decimal('sts', 30, 4)->nullable();
+            $table->decimal('williams_r', 30, 4)->nullable();
         });
     }
 

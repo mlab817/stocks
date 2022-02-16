@@ -14,7 +14,7 @@ class AddPctChangeColumnToHistoricalPricesTable extends Migration
     public function up()
     {
         Schema::table('historical_prices', function (Blueprint $table) {
-            $table->decimal('pct_change', 20, 2)->nullable();
+            $table->decimal('pct_change', 30, 4)->nullable();
         });
     }
 

@@ -18,7 +18,7 @@ class CreateMarketStatisticsTable extends Migration
             $table->foreignId('company_id')->constrained();
             $table->year('year');
             $table->unsignedBigInteger('volume')->default(0);
-            $table->decimal('value', 30, 2)->default(0);
+            $table->decimal('value', 30, 4)->default(0);
             $table->timestamps();
         });
     }

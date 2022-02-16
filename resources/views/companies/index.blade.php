@@ -11,6 +11,7 @@
                     <th>Sector</th>
                     <th>Subsector</th>
                     <th>Last Price</th>
+                    <th>% Change</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -36,6 +37,9 @@
                         </td>
                         <td>
                             {{ number_format(optional($company->latest_price)->close, 2) }}
+                        </td>
+                        <td @if(optional($company->latest_price)->pct_change > 0) class="text-success" @else class="text-danger" @endif>
+                            {{ number_format(optional($company->latest_price)->pct_change, 2) }}
                         </td>
                         <td>
                             <a href="{{ route('companies.edit', $company) }}" class="btn btn-primary">Edit</a>
