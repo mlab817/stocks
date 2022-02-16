@@ -1,11 +1,3 @@
-.required::after {
-    content: ' *';
-    color: red;
-}
-
-/**
- * Hovercard styling
- */
 .hovercard {
     display: none;
     position: absolute;

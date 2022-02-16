@@ -30,6 +30,6 @@ class MamaController extends Controller
                 && $price->risk_bullish;
         });
 
-        return view('prices', compact('prices'));
+        return view('mama', compact('prices'));
     }
 }

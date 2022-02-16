@@ -92,9 +92,14 @@ class HistoricalPrice extends Model
     public function getRiskAttribute()
     {
         // commission = 1.195
-        return $this->low > $this->alma
-            ? number_format(($this->close - $this->alma) / $this->close * 100 + 1.195, 2)
-            : '-';
+        return number_format(($this->close - $this->alma) / $this->close * 100 + 1.195, 2);
+    }
+
+    public function getMamaAttribute(): bool
+    {
+        // alma cross or alma bullish && macd_hist between 0.01
+        return ($this->alma_cross || $this->alma_bullish)
+            && abs($this->macd_hist) < 0.01;
     }
 
     public function getRiskBullishAttribute(): bool

@@ -24,6 +24,7 @@
 
     <link rel="stylesheet" type="text/css" href="https://code.highcharts.com/css/stocktools/gui.css">
     <link rel="stylesheet" type="text/css" href="https://code.highcharts.com/css/annotations/popup.css">
+
 </head>
 <body>
     <div id="app">
@@ -61,9 +62,6 @@
                                     BOPIS
                                 </a>
                             </div>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('mama') }}">MAMA Screener</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('trades.index') }}">Trades</a>
@@ -119,5 +117,11 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
 
     @stack('scripts')
+    <script>
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl)
+        })
+    </script>
 </body>
 </html>
