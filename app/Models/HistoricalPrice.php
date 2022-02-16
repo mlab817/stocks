@@ -78,9 +78,15 @@ class HistoricalPrice extends Model
         return $this->low > $this->alma;
     }
 
+    public function getAlmaCrossAttribute(): bool
+    {
+        return $this->open <= $this->alma
+            && $this->close > $this->alma;
+    }
+
     public function getMacdBullishAttribute(): bool
     {
-        return $this->macd_hist > 0;
+        return abs($this->macd_hist) <= 0.01;
     }
 
     public function getRiskAttribute()

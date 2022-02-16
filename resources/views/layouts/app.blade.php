@@ -45,6 +45,23 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('companies.index') }}">Companies</a>
                         </li>
+                        <li class="nav-item dropdown">
+                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                Screeners
+                            </a>
+
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="{{ route('mama') }}">
+                                    MAMA
+                                </a>
+                                <a class="dropdown-item" href="{{ route('tita') }}">
+                                    TITA
+                                </a>
+                                <a class="dropdown-item" href="{{ route('bopis') }}">
+                                    BOPIS
+                                </a>
+                            </div>
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('mama') }}">MAMA Screener</a>
                         </li>

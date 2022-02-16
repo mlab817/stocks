@@ -24,7 +24,7 @@ class MamaController extends Controller
             ->get();
 
         $prices = $prices->filter(function ($price) {
-            return $price->alma_bullish
+            return ($price->alma_cross || $price->alma_bullish)
                 && $price->macd_bullish
                 && $price->value_bullish
                 && $price->risk_bullish;
