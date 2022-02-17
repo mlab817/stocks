@@ -23,6 +23,8 @@ Route::resource('companies', \App\Http\Controllers\CompanyController::class);
 Route::resource('historical_prices', \App\Http\Controllers\HistoricalPriceController::class);
 Route::resource('trades',\App\Http\Controllers\TradeController::class)->middleware('auth');
 
+Route::get('/portfolio', \App\Http\Controllers\PortfolioController::class)->name('portfolio');
+
 Route::get('/mama', \App\Http\Controllers\MamaController::class)->name('mama');
 
 Route::get('/bopis', \App\Http\Controllers\BopisController::class)->name('bopis');

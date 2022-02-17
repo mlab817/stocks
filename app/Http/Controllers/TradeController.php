@@ -50,30 +50,7 @@ class TradeController extends Controller
             'remarks' => 'nullable',
         ]);
 
-//        trade_type
-//        company_id
-//        shares
-//        date
-        $base_cost = $request->price * $request->shares;
-        $commission = $base_cost * 0.0025;
-        $vat = $commission * 0.12;
-        $sccp_fee = $base_cost * 0.0001;
-        $pse_fee = $base_cost * 0.00005;
-
-        if ($request->trade_type == 'sell') {
-            $sales_tax = $base_cost * 0.006;
-        } else {
-            $sales_tax = 0;
-        }
-
-        $trade = Trade::create($request->all());
-        $trade->commission = $commission;
-        $trade->vat = $vat;
-        $trade->sccp_fee = $sccp_fee;
-        $trade->pse_fee = $pse_fee;
-        $trade->sales_tax = $sales_tax;
-        $trade->user_id = auth()->id() ?? 1;
-        $trade->save();
+        Trade::create($request->all());
 
         return redirect()->route('trades.index');
     }
@@ -95,9 +72,11 @@ class TradeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Trade $trade)
     {
-        //
+        return view('trades.edit', compact('trade'))
+            ->with('trade_types', Trade::TRADE_TYPES)
+            ->with('companies', Company::select('id','symbol')->get());
     }
 
     /**
@@ -107,9 +86,20 @@ class TradeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Trade $trade)
     {
-        //
+        $request->validate([
+            'trade_type' => 'required|in:' . implode(',',Trade::TRADE_TYPES),
+            'company_id' => 'required|exists:companies,id',
+            'date' => 'required|date',
+            'shares' => 'required|int',
+            'price' => 'required|numeric',
+            'remarks' => 'nullable',
+        ]);
+
+        $trade->update($request->all());
+
+        return redirect()->route('trades.index');
     }
 
     /**
@@ -118,8 +108,10 @@ class TradeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Trade $trade)
     {
-        //
+        $trade->delete();
+
+        return redirect()->route('trades.index');
     }
 }

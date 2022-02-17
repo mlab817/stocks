@@ -10,6 +10,7 @@
         <table class="table">
             <thead>
                 <tr>
+                    <th></th>
                     <th>Date</th>
                     <th class="text-center">Stock</th>
                     <th class="text-end">No. of Shares</th>
@@ -25,11 +26,19 @@
                     <th class="text-center">
                         Remarks
                     </th>
+                    <th>
+
+                    </th>
                 </tr>
             </thead>
             <tbody>
                 @foreach($trades as $trade)
                     <tr>
+                        <td>
+                            <a href="{{ route('trades.edit', $trade) }}" class="btn btn-sm btn-secondary">
+                                <i class="bi bi-pencil-square"></i>
+                            </a>
+                        </td>
                         <td>
                             {{ $trade->date }}
                         </td>
@@ -56,6 +65,15 @@
                         </td>
                         <th class="text-center">
                             {{ $trade->remarks }}
+                        </th>
+                        <th>
+                            <form action="{{ route('trades.destroy', $trade) }}" class="form-inline" method="post" onsubmit="return confirm('Are you sure you want to delete this?')">
+                                @csrf
+                                @method('delete')
+                                <button type="submit" class="btn btn-danger btn-sm">
+                                    <i class="bi bi-x-circle-fill"></i>
+                                </button>
+                            </form>
                         </th>
                     </tr>
                 @endforeach
