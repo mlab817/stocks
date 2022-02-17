@@ -123,5 +123,8 @@
             return new bootstrap.Tooltip(tooltipTriggerEl)
         })
     </script>
+
+    <!-- Alpine.js -->
+    <script src="//unpkg.com/alpinejs" defer></script>
 </body>
 </html>

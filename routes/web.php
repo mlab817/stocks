@@ -21,7 +21,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::resource('companies', \App\Http\Controllers\CompanyController::class);
 Route::resource('historical_prices', \App\Http\Controllers\HistoricalPriceController::class);
-Route::resource('trades',\App\Http\Controllers\TradeController::class);
+Route::resource('trades',\App\Http\Controllers\TradeController::class)->middleware('auth');
 
 Route::get('/mama', \App\Http\Controllers\MamaController::class)->name('mama');
 
