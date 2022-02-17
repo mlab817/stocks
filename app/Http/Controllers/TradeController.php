@@ -47,6 +47,7 @@ class TradeController extends Controller
             'date' => 'required|date',
             'shares' => 'required|int',
             'price' => 'required|numeric',
+            'remarks' => 'nullable',
         ]);
 
 //        trade_type

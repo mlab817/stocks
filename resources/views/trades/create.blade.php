@@ -42,6 +42,9 @@
             <label for="price" class="form-label mt-3 required">Price per Share</label>
             <input type="number" id="price" name="price" class="form-control" step="0.01">
 
+            <label for="remarks" class="form-label mt-3">Remarks</label>
+            <textarea name="remarks" id="remarks" class="form-control"></textarea>
+
             <button type="submit" class="btn btn-primary mt-3">Save</button>
         </form>
     </div>

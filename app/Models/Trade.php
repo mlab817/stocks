@@ -11,7 +11,7 @@ class Trade extends Model
 
     public const TRADE_TYPES = [
         'buy',
-        'sell'
+        'sell',
     ];
 
     protected $fillable = [
@@ -26,6 +26,7 @@ class Trade extends Model
         'sales_tax',
         'sccp_fee',
         'pse_fee',
+        'remarks',
     ];
 
     public function company()

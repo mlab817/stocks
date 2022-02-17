@@ -22,6 +22,9 @@
                     <th class="text-end">
                         Latest Price
                     </th>
+                    <th class="text-center">
+                        Remarks
+                    </th>
                 </tr>
             </thead>
             <tbody>
@@ -51,6 +54,9 @@
                         <td class="text-end">
                             {{ number_format($trade->company->latest_price->close, 2) }}
                         </td>
+                        <th class="text-center">
+                            {{ $trade->remarks }}
+                        </th>
                     </tr>
                 @endforeach
             </tbody>
