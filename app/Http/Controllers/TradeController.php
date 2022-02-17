@@ -17,7 +17,11 @@ class TradeController extends Controller
     {
         $trades = Trade::where('trade_type','buy')->get();
 
-        return view('trades.index', compact('trades'));
+        return view('trades.index', compact('trades'))
+            ->with([
+                'companies' => Company::select('id','symbol')->get(),
+                'trade_types' => Trade::TRADE_TYPES
+                ]);
     }
 
     /**

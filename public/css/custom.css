@@ -3,38 +3,56 @@
     color: red;
 }
 
-/**
- * Hovercard styling
- */
-.hovercard {
-    display: none;
-    position: absolute;
-    width:300px;
-    padding:3px;
-    height: 150px;
-    border:1px solid #aaa;
-    border-radius: 3px;
-    background-color: #fff;
-    -webkit-box-shadow:  rgba(0, 0, 0, 0.4) 0px 3px 4px;
-    -moz-box-shadow:  rgba(0, 0, 0, 0.4) 0px 3px 4px;
-    box-shadow:  rgba(0, 0, 0, 0.4) 0px 3px 4px;
+@font-face {
+    font-family: "bootstrap-icons";
+    src: url("./fonts/bootstrap-icons.woff2?524846017b983fc8ded9325d94ed40f3") format("woff2"),
+    url("./fonts/bootstrap-icons.woff?524846017b983fc8ded9325d94ed40f3") format("woff");
 }
-.hovercard:before {
-    content: "";
-    position: absolute;
-    bottom: 100%;
-    left: 20px;
-    border-bottom: 20px solid black;
-    border-bottom-color: inherit;
-    border-left: 20px solid transparent;
-    border-right: 20px solid transparent;
+
+.sidebar .nav-item.dropdown .dropdown-toggle::after,
+.topbar .nav-item.dropdown .dropdown-toggle::after {
+    width: 1rem;
+    text-align: center;
+    float: right;
+    vertical-align: 0;
+    border: 0;
+    font-weight: 900;
+    content: '\f231';
+    font-family: bootstrap-icons;
 }
-.hovercard h3{
-    font-family: Verdana, Georgia;
-    border-bottom: 1px dashed #ccc;
+
+.sidebar .nav-item.dropdown.show .dropdown-toggle::after,
+.topbar .nav-item.dropdown.show .dropdown-toggle::after {
+    content: '\f231';
+    font-family: bootstrap-icons;
 }
-.hovercard a{
-    text-decoration: none;
-    cursor: pointer;
-    border-bottom: 1px dashed #eee;
+
+.sidebar #sidebarToggle::after {
+    font-weight: 900;
+    content: '\f22d';
+    font-family: bootstrap-icons;
+    margin-right: 0.1rem;
+}
+
+.sidebar.toggled #sidebarToggle::after {
+    content: '\f231';
+    font-family: bootstrap-icons;
+    margin-left: 0.25rem;
+}
+
+@media (min-width: 768px) {
+    .sidebar .nav-item .nav-link[data-toggle="collapse"]::after {
+        width: 1rem;
+        text-align: center;
+        float: right;
+        vertical-align: 0;
+        border: 0;
+        font-weight: 900;
+        content: '\f229';
+        font-family: bootstrap-icons !important;
+    }
+
+    .sidebar .nav-item .nav-link[data-toggle="collapse"].collapsed::after {
+        content: '\f231';
+    }
 }

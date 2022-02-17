@@ -17,14 +17,10 @@ class CompanyController extends Controller
     {
         $search = $request->search;
 
-        $companies = Company::with(['latest_price','subsector.sector'])->orderBy('symbol');
-
-        if ($search) {
-            $companies = $companies->where('symbol',strtoupper($search))
-                ->orWhere('name', strtoupper($search));
-        }
-
-        $companies = $companies->get();
+        $companies = Company::with(['latest_price','subsector.sector'])
+            ->active()
+            ->orderBy('symbol')
+            ->get();
 
         return view('companies.index', compact('companies'));
     }

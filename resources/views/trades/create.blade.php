@@ -16,7 +16,7 @@
         <form action="{{ route('trades.store') }}" method="POST" accept-charset="UTF-8">
             @csrf
             <label for="trade_type" class="form-label mt-3 required">Buy or Sell</label>
-            <select class="form-select" id="trade_type" name="trade_type">
+            <select class="form-control" id="trade_type" name="trade_type">
                 <option value="">Select One</option>
                 @foreach($trade_types as $trade_type)
                     <option value="{{ $trade_type }}">
@@ -26,7 +26,7 @@
             </select>
 
             <label for="company_id" class="form-label mt-3 required">Stock</label>
-            <select class="form-select" id="company_id" name="company_id">
+            <select class="form-control" id="company_id" name="company_id">
                 <option value="">Select One</option>
                 @foreach($companies as $company)
                     <option value="{{ $company->id }}">

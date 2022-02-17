@@ -39,4 +39,9 @@ class Company extends Model
         return $this->hasOne(HistoricalPrice::class)
             ->latestOfMany();
     }
+
+    public function scopeActive($query)
+    {
+        $query->where('active', true);
+    }
 }
