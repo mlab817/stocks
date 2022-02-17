@@ -7,9 +7,9 @@
 
 
 @section('content')
-    <div class="container-lg mb-5">
-        <div id="container" style="height: 100vh; min-width: 310px;"></div>
-    </div>
+    <h1 class="h3 mb-2 text-gray-800">Company Profile: {{ $company->symbol }}</h1>
+
+    <div id="container" style="height: 100vh; min-width: 310px;"></div>
 
     <div class="container-lg">
         <h2>Historical Price</h2>

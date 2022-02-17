@@ -30,7 +30,7 @@
     <li class="nav-item">
         <a class="nav-link" href="{{ route('companies.index') }}">
             <i class="bi bi-building"></i>
-            <span>Stocks</span>
+            <span>Companies</span>
         </a>
     </li>
 
@@ -56,6 +56,13 @@
         <a class="nav-link" href="{{ route('fundamentals') }}" >
             <i class="bi bi-info-circle-fill"></i>
             <span>Fundamentals</span>
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('calculator') }}">
+            <i class="bi bi-calculator-fill"></i>
+            <span>Calculator</span>
         </a>
     </li>
 
