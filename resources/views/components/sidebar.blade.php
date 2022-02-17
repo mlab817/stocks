@@ -52,6 +52,13 @@
         </div>
     </li>
 
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('fundamentals') }}" >
+            <i class="bi bi-info-circle-fill"></i>
+            <span>Fundamentals</span>
+        </a>
+    </li>
+
     <!-- Divider -->
     <hr class="sidebar-divider">
 

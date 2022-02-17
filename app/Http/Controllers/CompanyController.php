@@ -18,7 +18,6 @@ class CompanyController extends Controller
         $search = $request->search;
 
         $companies = Company::with(['latest_price','subsector.sector'])
-            ->active()
             ->orderBy('symbol')
             ->get();
 
@@ -99,5 +98,12 @@ class CompanyController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function fundamentals(Request $request)
+    {
+        $companies = Company::with('market_statistic','subsector.sector','latest_price')->get();
+
+        return view('fundamentals', compact('companies'));
     }
 }

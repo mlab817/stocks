@@ -24,11 +24,11 @@ class CreateOtherInformationTable extends Migration
             $table->string('isin')->nullable();
             $table->string('issue_type')->nullable();
             $table->string('listing_date')->nullable();
-            $table->decimal('board_lot', 10, 4)->default(0);
-            $table->decimal('par_value', 10 ,4)->default(0);
+            $table->decimal('board_lot', 30, 4)->default(0);
+            $table->decimal('par_value', 30 ,4)->default(0);
             $table->string('foreign_ownership_limit')->nullable();
             $table->string('year_end_eps_period')->nullable();
-            $table->decimal('year_end_eps', 10, 4)->default(0);
+            $table->decimal('year_end_eps', 30, 4)->default(0);
             $table->string('interim_eps')->nullable();
             $table->string('interim_period')->nullable();
             $table->timestamps();

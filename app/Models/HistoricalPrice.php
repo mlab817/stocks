@@ -86,7 +86,9 @@ class HistoricalPrice extends Model
 
     public function getMacdBullishAttribute(): bool
     {
-        return abs($this->macd_hist) <= 0.01;
+        $pct = $this->macd_hist / $this->macd;
+
+        return abs($pct) <= 0.10;
     }
 
     public function getRiskAttribute()
@@ -99,7 +101,7 @@ class HistoricalPrice extends Model
     {
         // alma cross or alma bullish && macd_hist between 0.01
         return ($this->alma_cross || $this->alma_bullish)
-            && abs($this->macd_hist) < 0.01;
+            && $this->macd_bullish;
     }
 
     public function getRiskBullishAttribute(): bool
@@ -110,5 +112,12 @@ class HistoricalPrice extends Model
     public function getValueBullishAttribute(): bool
     {
         return $this->value > 10 **6;
+    }
+
+    public function getVolumeAttribute(): int
+    {
+        return $this->close > 0
+            ? round($this->value / $this->close, 0)
+            : 0;
     }
 }
