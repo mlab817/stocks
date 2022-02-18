@@ -83,7 +83,15 @@
             const incs = [1,2,3,4,5,6,7,8,9,10],
                 price = parseFloat(this.price)
                 fluctuations = this.board_and_increment[1]
-            return incs.map(inc => (price + inc * 2 * fluctuations))
+            return incs.map(inc => {
+                    const newPrice = price + inc * 2 * fluctuations,
+                        profit = this.calculateProfit(newPrice)
+                    return {
+                        newPrice: newPrice,
+                        profit: profit.profit,
+                        pct_profit: profit.pct_profit
+                    }
+                })
         },
         calculateProfit(price) {
             console.log(price)
@@ -196,30 +204,16 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <template x-for="(price, index) in prices" :key="index">
-                        <tr x-data="{
-                            price: price,
-                            profit: calculateProfit(price),
-                            get textClass() {
-                                const profit = this.profit.profit
-                                switch(true) {
-                                    case profit > 0:
-                                        return 'text-success'
-                                    case profit < 0:
-                                        return 'text-danger'
-                                    default:
-                                        return ''
-                                }
-                            }
-                        }">
+                    <template x-for="({ newPrice, profit, pct_profit }, index) in prices" :key="index">
+                        <tr>
                             <td class="text-center">
-                                <span x-text="price && price.toFixed(2)"></span>
+                                <span x-text="newPrice && newPrice.toFixed(2)"></span>
                             </td>
-                            <td class="text-center" x-bind:class="textClass">
-                                <span x-text="profit.profit"></span>
+                            <td class="text-center" x-bind:class="profit >= 0 ? 'text-success' : 'text-danger'">
+                                <span x-text="profit"></span>
                             </td>
-                            <td class="text-center" x-bind:class="textClass">
-                                <span x-text="profit.pct_profit"></span>
+                            <td class="text-center" x-bind:class="profit >= 0 ? 'text-success' : 'text-danger'">
+                                <span x-text="pct_profit"></span>
                             </td>
                         </tr>
                     </template>
