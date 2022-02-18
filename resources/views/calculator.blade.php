@@ -99,7 +99,7 @@
                 grossAmount = this.quantity * price
 
             const net = grossAmount >= 8000
-                ? grossAmount - (0.01165 * grossAmount)
+                ? grossAmount - (0.00895 * grossAmount)
                 : grossAmount - 22.40 - (0.00615 * grossAmount)
 
             const profit = net - acquisitionCost
