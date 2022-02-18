@@ -24,9 +24,10 @@ class TitaController extends Controller
             ->get();
 
         $prices = $prices->filter(function ($price) {
-//            return $price->rsi == 50 || $price->rsi == 55
-//                && $price->alma < $price->low;
-            return $price;
+            return $price->rsi >= 50
+                && $price->rsi <= 55
+                && ($price->alma < $price->low || ($price->alma > $price->low && $price->close > $price->alma))
+                && $price->value >= 10**6;
         });
 
         return view('tita', compact('prices'))

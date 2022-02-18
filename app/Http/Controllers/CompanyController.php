@@ -51,14 +51,16 @@ class CompanyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Company $company)
+    public function show(Request $request, Company $company)
     {
+        $indicator = $request->query('indicator');
+
         $prices = $company->prices()
             ->with('company')
             ->where('date','>', Carbon::now()->subYear())
             ->get();
 
-        return view('companies.show', compact('company', 'prices'));
+        return view('companies.show', compact('company', 'prices', 'indicator'));
     }
 
     /**
@@ -95,7 +97,7 @@ class CompanyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Company $company)
     {
         //
     }
