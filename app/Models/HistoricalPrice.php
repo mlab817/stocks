@@ -86,7 +86,9 @@ class HistoricalPrice extends Model
 
     public function getMacdBullishAttribute(): bool
     {
-        $pct = $this->macd_hist / $this->macd;
+        $pct = $this->macd > 0
+            ? $this->macd_hist / $this->macd
+            : 0;
 
         return abs($pct) <= 0.10;
     }

@@ -41,6 +41,29 @@
                 total: total,
                 averageCost: averageCost
             }
+        },
+        get boardLot() {
+            const price = this.price
+            switch (true) {
+                case price >= 0.0001 && price <= 0.0099:
+                    return 10**6
+                case price >= 0.010 && price <= 0.049:
+                    return 10**5
+                case price >= 0.05 && price <= 0.249:
+                    return 10**4
+                case price >= 0.25 && price <= 0.495:
+                    return 10**4
+                case price >= 0.5 &&  price <= 4.99:
+                    return 10**3
+                case price >= 5 && price <= 49.95:
+                    return 10**2
+                case price >= 50 && price <= 999.50:
+                    return 10
+                case price >= 1000:
+                    return 5
+                default:
+                    return 0
+            }
         }
     }">
         <div class="col-md-6">
@@ -59,8 +82,14 @@
                     </tr>
                     <tr>
                         <td>Price</td>
-                        <td>
+                        <td class="text-right">
                             <input type="text" class="form-control text-right" x-model="price">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Board Lot</td>
+                        <td class="text-right">
+                            <span x-text="boardLot"></span>
                         </td>
                     </tr>
                     <tr>
@@ -98,10 +127,6 @@
                         <td class="text-right">
                             <span x-text="buy.transactionFee.toLocaleString('en-US')"></span>
                         </td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
                     </tr>
                     <tr>
                         <td>Total Charges</td>
