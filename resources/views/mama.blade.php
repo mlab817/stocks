@@ -6,7 +6,7 @@
 @endphp
 
 @section('content')
-    <h2 class="mt-2 mb-5">MAMA Status as of {{ \Carbon\Carbon::createFromTimestamp($prices->max('date'))->format('M d, Y') }}</h2>
+    <h2 class="h3 mb-2">MAMA Status as of {{ \Carbon\Carbon::createFromTimestamp($prices->max('date'))->format('M d, Y') }}</h2>
 
     <div class="card mb-5">
         <div class="card-body">

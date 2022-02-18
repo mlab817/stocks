@@ -3,7 +3,7 @@
 @section('content')
     <h1 class="h3 mb-2 text-gray-800">Trading Calculator</h1>
 
-    <div class="row my-5" x-data="{
+    <div class="row" x-data="{
         price: 10,
         quantity: 800,
         get breakeven() {
@@ -42,27 +42,63 @@
                 averageCost: averageCost
             }
         },
-        get boardLot() {
+        get board_and_increment() {
             const price = this.price
             switch (true) {
                 case price >= 0.0001 && price <= 0.0099:
-                    return 10**6
+                    return [10**6, 0.0001]
                 case price >= 0.010 && price <= 0.049:
-                    return 10**5
+                    return [10**5, 0.001]
                 case price >= 0.05 && price <= 0.249:
-                    return 10**4
+                    return [10**4, 0.001]
                 case price >= 0.25 && price <= 0.495:
-                    return 10**4
+                    return [10**4, 0.005]
                 case price >= 0.5 &&  price <= 4.99:
-                    return 10**3
-                case price >= 5 && price <= 49.95:
-                    return 10**2
-                case price >= 50 && price <= 999.50:
-                    return 10
-                case price >= 1000:
-                    return 5
+                    return [10**3, 0.01]
+                case price >= 5 && price <= 9.99:
+                    return [10**2, 0.01]
+                case price >= 10 && price <= 19.98:
+                    return [10**2, 0.02]
+                case price >= 20 && price <= 49.95:
+                    return [10**2, 0.05]
+                case price >= 50 && price <= 99.95:
+                    return [10, 0.05]
+                case price >= 100 && price <= 199:
+                    return [10, 0.10]
+                case price >= 200 && price <= 499.80:
+                    return [10, 0.20]
+                case price >= 500 && price <= 999.50:
+                    return [10, 0.50]
+                case price >= 1000 && price <= 1999:
+                    return [5, 1]
+                case price >= 2000 && price <= 4998:
+                    return [5, 2]
+                case price >= 5000:
+                    return [5, 5]
                 default:
-                    return 0
+                    return [0, 0]
+            }
+        },
+        get prices() {
+            const incs = [1,2,3,4,5,6,7,8,9,10],
+                price = parseFloat(this.price)
+                fluctuations = this.board_and_increment[1]
+            return incs.map(inc => (price + inc * 2 * fluctuations))
+        },
+        calculateProfit(price) {
+            console.log(price)
+            const acquisitionCost = this.buy.total,
+                grossAmount = this.quantity * price
+
+            const net = grossAmount >= 8000
+                ? grossAmount - (0.01165 * grossAmount)
+                : grossAmount - 22.40 - (0.00615 * grossAmount)
+
+            const profit = net - acquisitionCost
+
+            return {
+                profit: (profit).toFixed(2),
+                pct_profit: (acquisitionCost > 0 ? profit / acquisitionCost * 100 : 0).toFixed(2)
             }
         }
     }">
@@ -87,9 +123,10 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>Board Lot</td>
+                        <td>Board Lot / Price Fluctuations</td>
                         <td class="text-right">
-                            <span x-text="boardLot"></span>
+                            <span x-text="board_and_increment[0]"></span> /
+                            <span x-text="board_and_increment[1]"></span>
                         </td>
                     </tr>
                     <tr>
@@ -153,12 +190,40 @@
             <table class="table table-bordered">
                 <thead>
                     <tr>
-                        <th>Sell At</th>
-                        <th>Net Profit</th>
-                        <th>% Profit</th>
+                        <th class="text-center">Sell At</th>
+                        <th class="text-center">Net Profit</th>
+                        <th class="text-center">% Profit</th>
                     </tr>
                 </thead>
-                <tbody></tbody>
+                <tbody>
+                    <template x-for="(price, index) in prices" :key="index">
+                        <tr x-data="{
+                            price: price,
+                            profit: calculateProfit(price),
+                            get textClass() {
+                                const profit = this.profit.profit
+                                switch(true) {
+                                    case profit > 0:
+                                        return 'text-success'
+                                    case profit < 0:
+                                        return 'text-danger'
+                                    default:
+                                        return ''
+                                }
+                            }
+                        }">
+                            <td class="text-center">
+                                <span x-text="price && price.toFixed(2)"></span>
+                            </td>
+                            <td class="text-center" x-bind:class="textClass">
+                                <span x-text="profit.profit"></span>
+                            </td>
+                            <td class="text-center" x-bind:class="textClass">
+                                <span x-text="profit.pct_profit"></span>
+                            </td>
+                        </tr>
+                    </template>
+                </tbody>
             </table>
         </div>
     </div>
