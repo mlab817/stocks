@@ -25,7 +25,7 @@ class MamaController extends Controller
 
         $prices = $prices->filter(function ($price) {
             return ($price->alma_cross || $price->alma_bullish)
-                && $price->macd_bullish
+                && in_array($price->macd_direction,['bullish cross','bearish cross'])
                 && $price->value_bullish
                 && $price->risk_bullish;
         });

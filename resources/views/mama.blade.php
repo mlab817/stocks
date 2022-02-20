@@ -10,6 +10,12 @@
 
     <div class="card mb-5">
         <div class="card-body">
+            <div class="row">
+                <form action="{{ route('mama') }}" method="get">
+
+                </form>
+            </div>
+
             <div class="table-responsive">
                 <table class="table table-bordered" id="data">
                     <thead>
@@ -27,7 +33,7 @@
                                 Risk (%)
                             </span>
                         </th>
-                        <th class="text-center">Action</th>
+                        <th class="text-center">Recommendation</th>
                         <th class="text-center">Remark</th>
                     </tr>
                     </thead>
@@ -41,10 +47,10 @@
                                     </a>
                                 </span>
                             </td>
-                            <td class="text-center">{{ $price->open }}</td>
-                            <td class="text-center">{{ $price->high }}</td>
-                            <td class="text-center">{{ $price->low }}</td>
-                            <td class="text-center">{{ $price->close }}</td>
+                            <td class="text-center">{{ number_format($price->open, 4) }}</td>
+                            <td class="text-center">{{ number_format($price->high, 4) }}</td>
+                            <td class="text-center">{{ number_format($price->low, 4) }}</td>
+                            <td class="text-center">{{ number_format($price->close, 4) }}</td>
                             <td class="text-center @if($price->low > $price->alma) text-success @else text-danger @endif">
                                 {{ number_format($price->alma, 2) }}
                             </td>
@@ -58,11 +64,11 @@
                                 {{ $price->risk }}
                             </td>
                             <td class="text-center">
-                                {!! $price->mama
+                                {!! $price->recommendation == 'buy'
                                     ? '<span class="badge rounded-pill bg-success">buy</span>'
                                     : '<span class="badge rounded-pill bg-secondary">watch</span>' !!}
                             </td>
-                            <td></td>
+                            <td>{{ $price->macd_direction }}</td>
                         </tr>
                     @endforeach
                     </tbody>

@@ -105,6 +105,13 @@
 
     <!-- Nav Item - Tables -->
     <li class="nav-item">
+        <a class="nav-link" href="{{ route('watchlists.index') }}">
+            <i class="bi bi-eye-fill"></i>
+            <span>Watchlist</span></a>
+    </li>
+
+    <!-- Nav Item - Tables -->
+    <li class="nav-item">
         <a class="nav-link" href="{{ route('portfolio') }}">
             <i class="bi bi-bank"></i>
             <span>Portfolio</span></a>

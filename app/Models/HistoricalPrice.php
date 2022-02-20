@@ -2,9 +2,11 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\DB;
 
 class HistoricalPrice extends Model
 {
@@ -121,5 +123,53 @@ class HistoricalPrice extends Model
         return $this->close > 0
             ? round($this->value / $this->close, 0)
             : 0;
+    }
+
+    public function getLaggedPriceAttribute()
+    {
+        return DB::table('historical_prices')
+            ->selectRaw('CAST(LEAD(macd_hist, 1) OVER(PARTITION BY company_id ORDER BY date DESC) AS DECIMAL) AS lag_macd_hist')
+            ->where('company_id', $this->company_id)
+            ->first();
+    }
+
+    public function getMacdDirectionAttribute(): string
+    {
+        $pct = $this->macd != 0
+            ? round(abs($this->macd_hist / $this->macd), 2)
+            : 0;
+
+        $current = round($this->macd_hist,2);
+        $lagged = $this->lagged_price
+            ? round($this->lagged_price->lag_macd_hist, 2)
+            : null;
+
+        // macd crosses and previous macd is negative
+        if ($pct == 0 && $lagged < 0) {
+            return 'bullish cross';
+        }
+
+        if ($pct == 0 && $lagged > 0) {
+            return 'bearish cross';
+        }
+
+        if ($lagged == 0 && $current > 0) {
+            return 'bullish cross';
+        }
+
+        if ($lagged == 0 && $current < 0) {
+            return 'bearish cross';
+        }
+
+        return 'no class';
+    }
+
+    public function getRecommendationAttribute(): string
+    {
+        if ($this->alma_bullish && $this->macd_direction == 'bullish cross' && $this->risk < 5) {
+            return 'buy';
+        }
+
+        return 'watch';
     }
 }

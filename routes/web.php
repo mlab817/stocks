@@ -35,6 +35,9 @@ Route::get('/bopis', \App\Http\Controllers\BopisController::class)->name('bopis'
 
 Route::get('/tita', \App\Http\Controllers\TitaController::class)->name('tita');
 
+Route::delete('/watchlists', [\App\Http\Controllers\WatchlistController::class,'destroy'])->name('watchlists.destroy');
+Route::resource('watchlists', \App\Http\Controllers\WatchlistController::class)->only('index','store','update');
+
 Route::get('/upload', function () {
     return view('upload');
 })->name('upload.show');

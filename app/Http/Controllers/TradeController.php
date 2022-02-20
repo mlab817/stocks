@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Company;
 use App\Models\Trade;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class TradeController extends Controller
@@ -15,7 +16,10 @@ class TradeController extends Controller
      */
     public function index()
     {
-        $trades = Trade::where('trade_type','buy')->get();
+        $trades = Trade::where('trade_type','buy')
+            ->orderByDesc('date')
+            ->where('user_id', auth()->id())
+            ->get();
 
         return view('trades.index', compact('trades'))
             ->with([
@@ -55,6 +59,13 @@ class TradeController extends Controller
         ]);
 
         Trade::create($request->all());
+
+        // add to watchlist
+        auth()->user()->watchlists()
+            ->create([
+                'company_id'    => $request->company_id,
+                'remarks'       => 'bought stock on ' . (string) $request->date,
+            ]);
 
         return redirect()->route('trades.index');
     }
