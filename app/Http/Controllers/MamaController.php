@@ -23,7 +23,7 @@ class MamaController extends Controller
 
         $companies = Company::active()->get()->pluck('id');
 
-        $query = 'WITH cte AS (
+        $query = 'SELECT * FROM (
                 SELECT a.date,
                 a.open,
                 a.high,
@@ -36,7 +36,7 @@ class MamaController extends Controller
                 CAST(LAG(macd_hist) OVER (PARTITION BY company_id ORDER BY date ASC) AS DECIMAL) AS lag_macd_hist
              FROM historical_prices a
              JOIN companies b ON a.company_id = b.id
-        ) SELECT * FROM cte WHERE date=?';
+        ) cte WHERE date=?';
 
         $prices = DB::select($query, [$latestDate->latest_date]);
 

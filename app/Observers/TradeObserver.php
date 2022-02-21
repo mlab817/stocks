@@ -30,7 +30,7 @@ class TradeObserver
         $trade->sccp_fee    = $sccp_fee;
         $trade->pse_fee     = $pse_fee;
         $trade->sales_tax   = $sales_tax;
-        $trade->user_id     = auth()->id() ?? 1;
+        $trade->user_id     = auth()->id();
     }
 
     /**
