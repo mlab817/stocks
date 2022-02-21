@@ -21,8 +21,7 @@
         <table class="table mt-5" id="data">
             <thead>
             <tr>
-                <th>ID</th>
-                <th>Company</th>
+                <th>Stock</th>
                 <th class="text-center">Open</th>
                 <th class="text-center">High</th>
                 <th class="text-center">Low</th>
@@ -37,7 +36,6 @@
             <tbody>
             @foreach($prices as $i => $price)
                 <tr>
-                    <td>{{ $i + 1 }}</td>
                     <td>
                         <a class="text-normal" target="_blank" href="{{ route('companies.show', $price->company) }}">
                             {{ $price->company->symbol }}

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\HistoricalPrice;
 use Illuminate\Http\Request;
 
 class TitaController extends Controller
@@ -26,7 +27,7 @@ class TitaController extends Controller
         $prices = $prices->filter(function ($price) {
             return $price->rsi >= 50
                 && $price->rsi <= 55
-                && ($price->alma < $price->low || ($price->alma > $price->low && $price->close > $price->alma))
+                && $price->alma_direction == HistoricalPrice::BULLISH
                 && $price->value >= 10**6;
         });
 

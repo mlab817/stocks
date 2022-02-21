@@ -1,33 +1,45 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <h3>Prices</h3>
-    </div>
+    <h3 class="h3 mb-2">Prices</h3>
 
     <div class="row">
-        @foreach($companies as $company)
-            @php($change = optional($company->latest_price)->pct_change)
-            <div class="col-2 p-2">
-                <div class="card text-white bg-gradient">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between">
-                            <h4>
-                                {{ $company->symbol }}
-                            </h4>
-                            {{ number_format(optional($company->latest_price)->pct_change, 2) }}%
-                        </div>
-                        <div class="d-flex text-end">
-                            <span class="w-100"></span>
-                            <h5>
-                                {{ number_format(optional($company->latest_price)->close, 2) }}
-                            </h5>
-                        </div>
-                    </div>
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-title">
+                    <h6 class="m-0 font-weight-bold text-primary">
+                        Portfolio
+                    </h6>
+                </div>
+                <div class="card-body">
+
                 </div>
             </div>
-        @endforeach
+        </div>
+        @auth
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-header">
+                    <h6 class="m-0 font-weight-bold text-primary">
+                        Watch List
+                    </h6>
+                </div>
+                <div class="card-body p-0">
+                    <ul class="list-group border-0">
+                        @foreach($watchlists as $wl)
+                        <li class="list-group-item">
+                            <div class="d-flex">
+                                <a href="{{ route('companies.show', $wl->company) }}">
+                                    {{ $wl->company->symbol }}
+                                </a>
+                            </div>
+                        </li>
+                        @endforeach
+                    </ul>
+                </div>
+            </div>
+        </div>
+        @endauth
     </div>
-</div>
+
 @endsection

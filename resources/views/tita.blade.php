@@ -21,6 +21,7 @@
                         <th class="text-center">Close</th>
                         <th class="text-center">RSI</th>
                         <th class="text-center">ALMA</th>
+                        <th class="text-center">ALMA Direction</th>
                         <th class="text-center">Value</th>
                         <th class="text-center">Risk (%)</th>
                     </tr>
@@ -50,6 +51,9 @@
                             </td>
                             <td class="text-center">
                                 {{ number_format($price->alma, 2) }}
+                            </td>
+                            <td class="text-center">
+                                {{ $price->alma_direction }}
                             </td>
                             <td class="text-right">
                                 {{ number_format($price->value) }}

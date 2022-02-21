@@ -6,7 +6,7 @@
 @endphp
 
 @section('content')
-    <h2 class="h3 mb-2">MAMA Status as of {{ \Carbon\Carbon::createFromTimestamp($prices->max('date'))->format('M d, Y') }}</h2>
+    <h2 class="h3 mb-2 text-primary">MAMA Status as of {{ \Carbon\Carbon::createFromTimestamp($prices->max('date'))->format('M d, Y') }}</h2>
 
     <div class="card mb-5">
         <div class="card-body">
@@ -20,7 +20,7 @@
                 <table class="table table-bordered" id="data">
                     <thead>
                     <tr>
-                        <th>Company</th>
+                        <th>Stock</th>
                         <th class="text-center">Open</th>
                         <th class="text-center">High</th>
                         <th class="text-center">Low</th>
@@ -35,8 +35,7 @@
                                 Risk (%)
                             </span>
                         </th>
-                        <th class="text-center">Recommendation</th>
-                        <th class="text-center"></th>
+                        <th class="text-center">Recom</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -49,12 +48,12 @@
                                     </a>
                                 </span>
                             </td>
-                            <td class="text-center">{{ number_format($price->open, 4) }}</td>
-                            <td class="text-center">{{ number_format($price->high, 4) }}</td>
-                            <td class="text-center">{{ number_format($price->low, 4) }}</td>
-                            <td class="text-center">{{ number_format($price->close, 4) }}</td>
+                            <td class="text-center">{{ number_format($price->open, 3) }}</td>
+                            <td class="text-center">{{ number_format($price->high, 3) }}</td>
+                            <td class="text-center">{{ number_format($price->low, 3) }}</td>
+                            <td class="text-center">{{ number_format($price->close, 3) }}</td>
                             <td class="text-center">
-                                {{ number_format($price->alma, 4) }}
+                                {{ number_format($price->alma, 3) }}
                             </td>
                             <td class="text-center  @if($price->candle == $bullish) text-success @elseif($price->candle == $bearish) text-danger @endif">
                                 {{ $price->candle }}
@@ -66,16 +65,15 @@
                             <td class="text-center @if($price->macd_direction == $bullish) text-success @elseif($price->macd_direction == $bearish) text-danger @endif">
                                 {{ $price->macd_direction }}
                             </td>
-                            <td class="text-center @if($price->value_bullish) text-success @@elseif($price->value_bullish == $bearish) text-danger @endif">
+                            <td class="text-center @if($price->value > 10**6) text-success @else text-danger @endif">
                                 {{ number_format($price->value, 0) }}
                             </td>
-                            <td class="text-center @if($price->risk < 5) text-success @else text-danger @endif">
-                                {{ $price->risk }}
+                            <td class="text-center @if($price->recommendation == \App\Models\HistoricalPrice::BUY && $price->risk < 5) text-success @else text-danger @endif">
+                                {{ $price->recommendation == \App\Models\HistoricalPrice::BUY ? number_format($price->risk, 2) : '' }}
                             </td>
                             <td class="text-center">
                                 {{ $price->recommendation }}
                             </td>
-                            <td class="text-center"></td>
                         </tr>
                     @endforeach
                     </tbody>
@@ -93,14 +91,10 @@
             <p>
                 <ol>
                     <li><strong>Bullish ALMA:</strong> Lowest price of the day is greater than ALMA or ALMA crossed a bullish candle.</li>
-                    <li><strong>Bullish MACD:</strong> MACD Line close to Signal Line, i.e. within 5% of MACD.</li>
+                    <li><strong>Bullish MACD:</strong> MACD Line crossed Signal Line.</li>
                     <li><strong>Bullish volume:</strong> Value of trade is greater than P1 million</li>
                     <li><strong>Tolerable risk:</strong> Risk (last price vs. ALMA) including fees of 1.195% is less than 5%.</li>
                 </ol>
-            </p>
-
-            <p>
-                <em>Note: This list does not capture when the MACD cross happened.</em>
             </p>
         </div>
     </div>

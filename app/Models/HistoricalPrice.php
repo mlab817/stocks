@@ -106,7 +106,7 @@ class HistoricalPrice extends Model
     public function getRiskAttribute()
     {
         // commission = 1.195
-        return $this->recommendation == self::BUY ? number_format(($this->close - $this->alma) / $this->close * 100 + 1.195, 2) : null;
+        return ($this->close - $this->alma) / $this->close * 100 + 1.195;
     }
 
     public function getMamaAttribute(): bool
@@ -161,6 +161,23 @@ class HistoricalPrice extends Model
         }
 
         return self::NEUTRAL;
+    }
+
+    public function getTrixDirectionAttribute()
+    {
+        $current = $this->trix;
+        $lagged = $this->lag_trix;
+        
+        if (($lagged < 0 && $current == 0.0) || ($lagged < 0.0 && $current > 0.0)) {
+            return self::BULLISH;
+        }
+
+        if (($lagged > 0.0 && $current == 0.0) || ($lagged > 0.0 && $current < 0)) {
+            return self::BEARISH;
+        }
+
+        return self::NEUTRAL;
+
     }
 
     public function getMacdDirectionAttribute(): string

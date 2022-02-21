@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Company;
+use App\Models\Watchlist;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -24,8 +25,15 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $user = auth()->user();
+        $watchlists = [];
+
         $companies = Company::with('latest_price')->get();
 
-        return view('home', compact('companies'));
+        if ($user) {
+            $watchlists = auth()->user()->watchlists;
+        }
+
+        return view('home', compact('companies','watchlists'));
     }
 }

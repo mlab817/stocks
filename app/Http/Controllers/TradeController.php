@@ -60,12 +60,14 @@ class TradeController extends Controller
 
         Trade::create($request->all());
 
-        // add to watchlist
-        auth()->user()->watchlists()
-            ->create([
-                'company_id'    => $request->company_id,
-                'remarks'       => 'bought stock on ' . (string) $request->date,
-            ]);
+        if (! auth()->user()->watchlists()->where('company_id', $request->company_id)->exists()) {
+            // add to watchlist
+            auth()->user()->watchlists()
+                ->create([
+                    'company_id'    => $request->company_id,
+                    'remarks'       => 'bought stock on ' . (string) $request->date,
+                ]);
+        }
 
         return redirect()->route('trades.index');
     }

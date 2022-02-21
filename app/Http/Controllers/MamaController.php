@@ -44,6 +44,11 @@ class MamaController extends Controller
 
         $prices = HistoricalPrice::hydrate($prices);
 
+        $prices = $prices->filter(function($price) {
+            return $price->recommendation == HistoricalPrice::BUY
+                || $price->recommendation == HistoricalPrice::SELL;
+        });
+
         return view('mama', compact('prices'));
     }
 }
