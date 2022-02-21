@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Company;
+use App\Models\HistoricalPrice;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class MamaController extends Controller
 {
@@ -18,17 +21,26 @@ class MamaController extends Controller
             ->selectRaw('MAX(date) as latest_date')
             ->first();
 
-        $prices = \App\Models\HistoricalPrice::with('company')
-            ->where('date', $latestDate->latest_date)
-            ->orderBy('company_id','asc')
-            ->get();
+        $companies = Company::active()->get()->pluck('id');
 
-        $prices = $prices->filter(function ($price) {
-            return ($price->alma_cross || $price->alma_bullish)
-                && in_array($price->macd_direction,['bullish cross','bearish cross'])
-                && $price->value_bullish
-                && $price->risk_bullish;
-        });
+        $query = 'WITH cte AS (
+                SELECT a.date,
+                a.open,
+                a.high,
+                a.low,
+                a.close,
+                a.value,
+                a.alma,
+                a.macd_hist,
+                b.symbol,
+                CAST(LAG(macd_hist) OVER (PARTITION BY company_id ORDER BY date ASC) AS DECIMAL) AS lag_macd_hist
+             FROM historical_prices a
+             JOIN companies b ON a.company_id = b.id
+        ) SELECT * FROM cte WHERE date=?';
+
+        $prices = DB::select($query, [$latestDate->latest_date]);
+
+        $prices = HistoricalPrice::hydrate($prices);
 
         return view('mama', compact('prices'));
     }

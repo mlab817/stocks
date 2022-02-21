@@ -42,8 +42,8 @@
                         <tr>
                             <td>
                                 <span rel="hovercard" data-url="/data" id="hovercard_{{$i}}">
-                                    <a class="text-normal" target="_blank" href="{{ route('companies.show', $price->company) }}">
-                                        {{ $price->company->symbol }}
+                                    <a class="text-normal" target="_blank" href="{{ route('companies.show', $price->symbol) }}">
+                                        {{ $price->symbol }}
                                     </a>
                                 </span>
                             </td>
@@ -55,7 +55,7 @@
                                 {{ number_format($price->alma, 2) }}
                             </td>
                             <td class="text-center @if($price->macd_hist >= 0) text-success @else text-danger @endif">
-                                {{ number_format($price->macd_hist, 2) }}
+                                {{ number_format($price->macd_hist, 4) }} ({{ number_format($price->lag_macd_hist, 4) }})
                             </td>
                             <td class="text-center @if($price->value_bullish) text-success @else text-danger @endif">
                                 {{ number_format($price->value, 0) }}
