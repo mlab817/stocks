@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
 @php
-    $bullish = 'text-success';
-    $bearish = 'text-danger';
+    $bullish = \App\Models\HistoricalPrice::BULLISH;
+    $bearish = \App\Models\HistoricalPrice::BEARISH;
 @endphp
 
 @section('content')
@@ -26,7 +26,9 @@
                         <th class="text-center">Low</th>
                         <th class="text-center">Close</th>
                         <th class="text-center">ALMA</th>
-                        <th class="text-center">MACD Hist</th>
+                        <th class="text-center">Candle</th>
+                        <th class="text-center">ALMA Direction</th>
+                        <th class="text-center">MACD Direction</th>
                         <th class="text-center">Value</th>
                         <th class="text-center">
                             <span data-bs-toggle="tooltip" title="Risk is calculated as difference between closing price and ALMA plus 1.195% for fees">
@@ -34,7 +36,7 @@
                             </span>
                         </th>
                         <th class="text-center">Recommendation</th>
-                        <th class="text-center">Remark</th>
+                        <th class="text-center"></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -51,11 +53,16 @@
                             <td class="text-center">{{ number_format($price->high, 4) }}</td>
                             <td class="text-center">{{ number_format($price->low, 4) }}</td>
                             <td class="text-center">{{ number_format($price->close, 4) }}</td>
-                            <td class="text-center @if($price->low > $price->alma) text-success @else text-danger @endif">
-                                {{ number_format($price->alma, 2) }}
+                            <td class="text-center">
+                                {{ number_format($price->alma, 4) }}
                             </td>
-                            <td class="text-center @if($price->macd_hist >= 0) text-success @else text-danger @endif">
-                                {{ number_format($price->macd_hist, 4) }} ({{ number_format($price->lag_macd_hist, 4) }})
+                            <td class="text-center">{{ $price->candle }}</td>
+                            <td class="text-center @if($price->low > $price->alma) text-success @else text-danger @endif">
+{{--                                {{ number_format($price->alma, 2) }}--}}
+                                {{ $price->alma_direction }}
+                            </td>
+                            <td class="text-center @if($price->macd_direction == $bullish) text-success @else text-danger @endif">
+                                {{ $price->macd_direction }}
                             </td>
                             <td class="text-center @if($price->value_bullish) text-success @else text-danger @endif">
                                 {{ number_format($price->value, 0) }}
@@ -64,11 +71,9 @@
                                 {{ $price->risk }}
                             </td>
                             <td class="text-center">
-                                {!! $price->recommendation == 'buy'
-                                    ? '<span class="badge rounded-pill bg-success">buy</span>'
-                                    : '<span class="badge rounded-pill bg-secondary">watch</span>' !!}
+                                {{ $price->recommendation }}
                             </td>
-                            <td>{{ $price->macd_direction }}</td>
+                            <td class="text-center"></td>
                         </tr>
                     @endforeach
                     </tbody>

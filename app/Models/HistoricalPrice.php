@@ -13,6 +13,14 @@ class HistoricalPrice extends Model
     use HasFactory;
     use SoftDeletes;
 
+    public const NEUTRAL    = 'neutral';
+    public const BULLISH    = 'bullish';
+    public const BEARISH    = 'bearish';
+    public const BUY        = 'buy';
+    public const SELL       = 'sell';
+    public const WATCH      = 'watch';
+    public const HOLD       = 'hold';
+
     protected $fillable = [
         'company_id',
         'date',
@@ -98,7 +106,7 @@ class HistoricalPrice extends Model
     public function getRiskAttribute()
     {
         // commission = 1.195
-        return number_format(($this->close - $this->alma) / $this->close * 100 + 1.195, 2);
+        return $this->recommendation == self::BUY ? number_format(($this->close - $this->alma) / $this->close * 100 + 1.195, 2) : null;
     }
 
     public function getMamaAttribute(): bool
@@ -125,28 +133,63 @@ class HistoricalPrice extends Model
             : 0;
     }
 
+    public function getCandleAttribute(): string
+    {
+        if ($this->open > $this->close) {
+            return self::BEARISH;
+        }
+
+        if ($this->close > $this->open) {
+            return self::BULLISH;
+        }
+
+        return self::NEUTRAL;
+    }
+
+    public function getAlmaDirectionAttribute(): string
+    {
+        if ($this->alma < $this->low) {
+            return self::BULLISH;
+        }
+
+        if ($this->alma > $this->high) {
+            return self::BEARISH;
+        }
+
+        if ($this->alma > $this->low && $this->alma < $this->high) {
+            return $this->candle;
+        }
+
+        return self::NEUTRAL;
+    }
+
     public function getMacdDirectionAttribute(): string
     {
-        $current = $this->macd_hist;
-        $lagged = $this->lag_macd_hist;
+        $current    = $this->macd_hist;
+        $lagged     = $this->lag_macd_hist;
 
-        if ($current <= 0 && $lagged >= 0) {
-            return 'bearish cross';
+        // three possible scenarios for bullish
+        if (($lagged < 0 && $current == 0.0) || ($lagged < 0.0 && $current > 0.0)) {
+            return self::BULLISH;
         }
 
-        if ($lagged <= 0 && $current >= 0) {
-            return 'bullish cross';
+        if (($lagged > 0.0 && $current == 0.0) || ($lagged > 0.0 && $current < 0)) {
+            return self::BEARISH;
         }
 
-        return 'neutral';
+        return self::NEUTRAL;
     }
 
     public function getRecommendationAttribute(): string
     {
-        if ($this->alma_bullish && $this->macd_direction == 'bullish cross' && $this->risk < 5) {
-            return 'buy';
+        if ($this->alma_direction == self::BULLISH && $this->macd_direction == self::BULLISH) {
+            return self::BUY;
         }
 
-        return 'watch';
+        if ($this->alma_direction == self::BEARISH && $this->macd_direction == self::BEARISH) {
+            return self::SELL;
+        }
+
+        return self::HOLD;
     }
 }
