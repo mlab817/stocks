@@ -24,16 +24,18 @@ class MamaController extends Controller
         $companies = Company::active()->get()->pluck('id');
 
         $query = 'SELECT * FROM (
-                SELECT a.date,
-                a.open,
-                a.high,
-                a.low,
-                a.close,
-                a.value,
-                a.alma,
-                a.macd_hist,
-                b.symbol,
-                CAST(LAG(macd_hist) OVER (PARTITION BY company_id ORDER BY date ASC) AS DECIMAL) AS lag_macd_hist
+                SELECT
+                    a.company_id,
+                    a.date,
+                    a.open,
+                    a.high,
+                    a.low,
+                    a.close,
+                    a.value,
+                    a.alma,
+                    a.macd_hist,
+                    b.symbol,
+                    LAG(macd_hist) OVER (PARTITION BY company_id ORDER BY date ASC) AS lag_macd_hist
              FROM historical_prices a
              JOIN companies b ON a.company_id = b.id
         ) cte WHERE date=?';
