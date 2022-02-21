@@ -10,47 +10,18 @@
     <form
         class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
         <div class="input-group" x-data="{
-            search: '',
-            get results() {
-                const search = this.search
-                let results = []
-                if (! search) {
-                    return []
-                }
-
-                axios({
-                    method: 'post',
-                    url: '{{ route('api.search') }}',
-                    data: {
-                        search: search
-                    }
-                }).then(res => {
-                    console.log(res.data)
-                    if (!res.data.length) {
-                        results = ['No results found']
-                    }
-                    results.push(res.data)
-                }).catch(err => {
-                    results = ['No results found']
-                })
-
-                console.log(results)
-
-                return results
+            doSomething(e) {
+                base_url = '{{ config('app.url') . '/companies/' }}'
+                window.location.href = base_url + e.target.value
             }
         }">
             <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
-                   aria-label="Search" aria-describedby="basic-addon2" list="searchresults" x-model="search">
-                <span x-text="JSON.stringify(results)"></span>
-{{--                <template x-if="results">--}}
-                    <datalist id="searchresults">
-                        <span x-text="JSON.stringify(results)"></span>
-                        <template x-for="(result, index) in results" :key="index">
-                            <option x-bind:value="result.symbol">
-                        </template>
-                    </datalist>
-{{--                </template>--}}
-
+                   aria-label="Search" aria-describedby="basic-addon2" list="searchresults" x-on:change="doSomething">
+                <datalist id="searchresults">
+                    @foreach(App\Models\Company::select('symbol')->orderBy('symbol')->get() as $company)
+                        <option>{{ $company->symbol }}</option>
+                    @endforeach
+                </datalist>
             <div class="input-group-append">
                 <button class="btn btn-primary" type="button">
                     <i class="bi bi-search"></i>

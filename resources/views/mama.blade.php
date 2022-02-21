@@ -56,15 +56,17 @@
                             <td class="text-center">
                                 {{ number_format($price->alma, 4) }}
                             </td>
-                            <td class="text-center">{{ $price->candle }}</td>
-                            <td class="text-center @if($price->low > $price->alma) text-success @else text-danger @endif">
+                            <td class="text-center  @if($price->candle == $bullish) text-success @elseif($price->candle == $bearish) text-danger @endif">
+                                {{ $price->candle }}
+                            </td>
+                            <td class="text-center @if($price->alma_direction == $bullish) text-success @elseif($price->alma_direction == $bearish) text-danger @endif">
 {{--                                {{ number_format($price->alma, 2) }}--}}
                                 {{ $price->alma_direction }}
                             </td>
-                            <td class="text-center @if($price->macd_direction == $bullish) text-success @else text-danger @endif">
+                            <td class="text-center @if($price->macd_direction == $bullish) text-success @elseif($price->macd_direction == $bearish) text-danger @endif">
                                 {{ $price->macd_direction }}
                             </td>
-                            <td class="text-center @if($price->value_bullish) text-success @else text-danger @endif">
+                            <td class="text-center @if($price->value_bullish) text-success @@elseif($price->value_bullish == $bearish) text-danger @endif">
                                 {{ number_format($price->value, 0) }}
                             </td>
                             <td class="text-center @if($price->risk < 5) text-success @else text-danger @endif">
