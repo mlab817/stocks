@@ -6,7 +6,7 @@
 @endphp
 
 @section('content')
-    <h2 class="h3 mb-2 text-primary">MAMA Status as of {{ \Carbon\Carbon::createFromFormat('Y-m-d', $latestDates[1])->format('M d, Y') }}</h2>
+    <h2 class="h3 mb-2 text-primary">MAMA Status as of {{ \Carbon\Carbon::createFromFormat('Y-m-d', $latestDate)->format('M d, Y') }}</h2>
 
     <div class="card mb-5">
         <div class="card-body">

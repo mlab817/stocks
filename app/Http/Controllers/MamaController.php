@@ -17,30 +17,18 @@ class MamaController extends Controller
      */
     public function __invoke(Request $request)
     {
-        $latestDates = \Illuminate\Support\Facades\DB::table('historical_prices')
-            ->selectRaw('DISTINCT(date) AS unique_date')
-            ->orderByDesc('date')
-            ->limit(2)
-            ->get();
+        $latestDate = \Illuminate\Support\Facades\DB::table('historical_prices')
+            ->select(DB::raw('MAX(date) AS latest_date'))
+            ->first();
 
-        $latestDates = $latestDates->sortBy('unique_date')->pluck('unique_date')->toArray();
-
-        $query = 'select * from (
-                    select *,
-                           lag(macd_hist) over(partition by company_id order by date asc) lag_macd_hist
-                    from historical_prices where date >= ?
-                ) tab1 where date=?';
-
-        $prices = DB::select($query, $latestDates);
-
-        $prices = HistoricalPrice::hydrate($prices);
-        $prices->load('company.latest_price');
+        $prices = HistoricalPrice::with('company')->where('date', $latestDate->latest_date)->get();
 
 //        $prices = $prices->filter(function($price) {
 //            return $price->recommendation == HistoricalPrice::BUY
 //                || $price->recommendation == HistoricalPrice::SELL;
 //        });
 
-        return view('mama', compact('prices','latestDates'));
+        return view('mama', compact('prices'))
+            ->with('latestDate', $latestDate->latest_date);
     }
 }
