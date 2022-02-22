@@ -57,6 +57,22 @@
                 </div>
                 @enderror
 
+                <label for="target_price" class="form-label mt-3 required">Target Price</label>
+                <input type="number" id="target_price" name="target_price" class="form-control @error('target_price') is-invalid @enderror" step="0.01" value="{{ old('target_price', $trade->target_price) }}">
+                @error('target_price')
+                <div class="invalid-feedback" role="alert">
+                    {{ $message }}
+                </div>
+                @enderror
+
+                <label for="cut_loss" class="form-label mt-3 required">Cut Loss Price</label>
+                <input type="number" id="cut_loss" name="cut_loss" class="form-control @error('cut_loss') is-invalid @enderror" step="0.01" value="{{ old('cut_loss', $trade->cut_loss) }}">
+                @error('cut_loss')
+                <div class="invalid-feedback" role="alert">
+                    {{ $message }}
+                </div>
+                @enderror
+
                 <label for="remarks" class="form-label mt-3">Remarks</label>
                 <textarea name="remarks" id="remarks" class="form-control @error('remarks') is-invalid @enderror">{{ $trade->remarks }}</textarea>
                 @error('remarks')

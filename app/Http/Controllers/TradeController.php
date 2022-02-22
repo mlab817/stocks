@@ -55,6 +55,8 @@ class TradeController extends Controller
             'date' => 'required|date',
             'shares' => 'required|int',
             'price' => 'required|numeric',
+            'target_price' => 'required|numeric',
+            'cut_loss' => 'required|numeric',
             'remarks' => 'nullable',
         ]);
 
@@ -111,6 +113,8 @@ class TradeController extends Controller
             'date' => 'required|date',
             'shares' => 'required|int',
             'price' => 'required|numeric',
+            'target_price' => 'required|numeric',
+            'cut_loss' => 'required|numeric',
             'remarks' => 'nullable',
         ]);
 

@@ -28,6 +28,8 @@ class Trade extends Model
         'sales_tax',
         'sccp_fee',
         'pse_fee',
+        'target_price',
+        'cut_loss',
         'remarks',
     ];
 
