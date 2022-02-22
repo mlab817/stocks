@@ -31,7 +31,7 @@
                                     {{ $company->symbol }}
                                 </a>
                             </td>
-                            <td>
+                            <td class="text-nowrap">
                                 {{ $company->listing_date }}
                             </td>
                             <td>
@@ -55,70 +55,72 @@
                                         <i class="bi bi-pen-fill"></i>
                                     </a>
 
-                                    @if(auth()->user()->watchlists()->where('company_id', $company->id)->exists())
-                                        <a href="#" class="btn btn-danger btn-sm ml-1" data-toggle="modal" data-target="#removeFromWatchlist_{{$company->id}}">
-                                            <i class="bi bi-eye-slash-fill"></i>
-                                        </a>
+                                    @auth
+                                        @if(auth()->user()->watchlists()->where('company_id', $company->id)->exists())
+                                            <a href="#" class="btn btn-danger btn-sm ml-1" data-toggle="modal" data-target="#removeFromWatchlist_{{$company->id}}">
+                                                <i class="bi bi-eye-slash-fill"></i>
+                                            </a>
 
-                                        <!-- Logout Modal-->
-                                        <div class="modal fade" id="removeFromWatchlist_{{$company->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                                             aria-hidden="true">
-                                            <div class="modal-dialog" role="document">
-                                                <form onsubmit="return confirm('Remove this stock to your watchlist?');" action="{{ route('watchlists.destroy') }}" method="POST">
-                                                    @csrf
-                                                    @method('delete')
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title">Remove from Watchlist</h5>
-                                                            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                                                                <span aria-hidden="true">×</span>
-                                                            </button>
+                                            <!-- Logout Modal-->
+                                            <div class="modal fade" id="removeFromWatchlist_{{$company->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                                                 aria-hidden="true">
+                                                <div class="modal-dialog" role="document">
+                                                    <form onsubmit="return confirm('Remove this stock to your watchlist?');" action="{{ route('watchlists.destroy') }}" method="POST">
+                                                        @csrf
+                                                        @method('delete')
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title">Remove from Watchlist</h5>
+                                                                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">×</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <input type="hidden" name="id" value="{{ $company->id }}">
+                                                                Are you sure you want to remove this from watchlist?
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                                                                <button type="submit" class="btn btn-primary">Submit</button>
+                                                            </div>
                                                         </div>
-                                                        <div class="modal-body">
-                                                            <input type="hidden" name="id" value="{{ $company->id }}">
-                                                            Are you sure you want to remove this from watchlist?
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                                                            <button type="submit" class="btn btn-primary">Submit</button>
-                                                        </div>
-                                                    </div>
-                                                </form>
+                                                    </form>
+                                                </div>
                                             </div>
-                                        </div>
-                                    @else
-                                        <a href="#" class="btn btn-success btn-sm ml-1" data-toggle="modal" data-target="#addToWatchlist_{{$company->id}}">
-                                            <i class="bi bi-eye-fill"></i>
-                                        </a>
+                                        @else
+                                            <a href="#" class="btn btn-success btn-sm ml-1" data-toggle="modal" data-target="#addToWatchlist_{{$company->id}}">
+                                                <i class="bi bi-eye-fill"></i>
+                                            </a>
 
-                                        <!-- Logout Modal-->
-                                        <div class="modal fade" id="addToWatchlist_{{$company->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                                             aria-hidden="true">
-                                            <div class="modal-dialog" role="document">
-                                                <form onsubmit="return confirm('Add this stock to your watchlist?');" action="{{ route('watchlists.store') }}" method="POST">
-                                                    @csrf
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title" id="exampleModalLabel">Add to Watchlist</h5>
-                                                            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                                                                <span aria-hidden="true">×</span>
-                                                            </button>
-                                                        </div>
+                                            <!-- Logout Modal-->
+                                            <div class="modal fade" id="addToWatchlist_{{$company->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                                                 aria-hidden="true">
+                                                <div class="modal-dialog" role="document">
+                                                    <form onsubmit="return confirm('Add this stock to your watchlist?');" action="{{ route('watchlists.store') }}" method="POST">
+                                                        @csrf
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="exampleModalLabel">Add to Watchlist</h5>
+                                                                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">×</span>
+                                                                </button>
+                                                            </div>
 
-                                                        <div class="modal-body">
-                                                            <input type="hidden" name="id" value="{{ $company->id }}">
-                                                            <label for="remarks">Remarks</label>
-                                                            <textarea name="remarks" id="remarks" class="form-control" rows="5" style="resize: none;"></textarea>
+                                                            <div class="modal-body">
+                                                                <input type="hidden" name="id" value="{{ $company->id }}">
+                                                                <label for="remarks">Remarks</label>
+                                                                <textarea name="remarks" id="remarks" class="form-control" rows="5" style="resize: none;"></textarea>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                                                                <button type="submit" class="btn btn-primary">Submit</button>
+                                                            </div>
                                                         </div>
-                                                        <div class="modal-footer">
-                                                            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                                                            <button type="submit" class="btn btn-primary">Submit</button>
-                                                        </div>
-                                                    </div>
-                                                </form>
+                                                    </form>
+                                                </div>
                                             </div>
-                                        </div>
-                                    @endif
+                                        @endif
+                                    @endauth
                                 </div>
                             </td>
                         </tr>

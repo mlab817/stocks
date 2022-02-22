@@ -95,6 +95,14 @@
 {{--        </div>--}}
 {{--    </li>--}}
 
+<!-- Nav Item - Charts -->
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('cash_transactions.index') }}">
+            <i class="bi bi-currency-exchange"></i>
+            <span>Cash In/Cash Out</span>
+        </a>
+    </li>
+
     <!-- Nav Item - Charts -->
     <li class="nav-item">
         <a class="nav-link" href="{{ route('trades.index') }}">

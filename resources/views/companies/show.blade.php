@@ -13,6 +13,8 @@
 
     <h2 class="mt-5">Historical Price</h2>
 
+    <p>Source: <a href="https://www.pse.com.ph">PSE</a>. Updated daily.</p>
+
     <div class="card">
         <div class="card-body" style="height: 50vh; overflow-y: scroll;">
             <div class="table-responsive">

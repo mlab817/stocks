@@ -67,11 +67,10 @@ class WatchlistController extends Controller
      */
     public function destroy(Request $request)
     {
-        $watchlist = auth()->user()->watchlists()->where('company_id', $request->id)
-            ->firstOrFail();
+        $watchlist = Watchlist::findOrFail($request->id);
 
         $watchlist->forceDelete();
 
-        return back();
+        return redirect()->route('watchlists.index');
     }
 }

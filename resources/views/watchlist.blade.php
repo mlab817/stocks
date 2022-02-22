@@ -14,6 +14,7 @@
                             <th>Last Price</th>
                             <th>% Change</th>
                             <th>Remarks</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -35,6 +36,16 @@
                                 </td>
                                 <td>
                                     {{ $watchlist->remarks }}
+                                </td>
+                                <td>
+                                    <form onsubmit="return confirm('Are you sure you want to remove this from watchlist?')" class="form-inline" action="{{ route('watchlists.destroy') }}" method="post">
+                                        @csrf
+                                        @method('delete')
+                                        <input type="hidden" name="id" value="{{ $watchlist->id }}">
+                                        <button type="submit" class="btn btn-danger btn-sm">
+                                            <i class="bi bi-trash-fill"></i>
+                                        </button>
+                                    </form>
                                 </td>
                             </tr>
                         @empty
