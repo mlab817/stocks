@@ -6,7 +6,7 @@
 @endphp
 
 @section('content')
-    <h2 class="h3 mb-2 text-primary">MAMA Status as of {{ \Carbon\Carbon::createFromTimestamp($prices->max('date'))->format('M d, Y') }}</h2>
+    <h2 class="h3 mb-2 text-primary">MAMA Status as of {{ \Carbon\Carbon::createFromFormat('Y-m-d', $latestDates[1])->format('M d, Y') }}</h2>
 
     <div class="card mb-5">
         <div class="card-body">
@@ -43,8 +43,8 @@
                         <tr>
                             <td>
                                 <span rel="hovercard" data-url="/data" id="hovercard_{{$i}}">
-                                    <a class="text-normal" target="_blank" href="{{ route('companies.show', $price->symbol) }}">
-                                        {{ $price->symbol }}
+                                    <a class="text-normal" target="_blank" href="{{ route('companies.show', $price->company) }}">
+                                        {{ $price->company->symbol }}
                                     </a>
                                 </span>
                             </td>
