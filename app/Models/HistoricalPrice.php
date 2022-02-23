@@ -46,6 +46,7 @@ class HistoricalPrice extends Model
         'psar',
         'ema_9',
         'pct_change',
+        'lag_macd_hist',
     ];
 
     protected $hidden = [
@@ -167,7 +168,7 @@ class HistoricalPrice extends Model
     {
         $current = $this->trix;
         $lagged = $this->lag_trix;
-        
+
         if (($lagged < 0 && $current == 0.0) || ($lagged < 0.0 && $current > 0.0)) {
             return self::BULLISH;
         }
