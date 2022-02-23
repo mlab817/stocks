@@ -5,6 +5,13 @@
 
     <div class="card shadow mb-4">
         <div class="card-body">
+            <div class="row justify-content-end mb-4">
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <form action="{{ route('companies.index') }}" method="GET" accept-charset="utf-8">
+                        <input value="{{ old('search', request()->query('search')) }}" type="search" name="search" class="form-control" placeholder="Search">
+                    </form>
+                </div>
+            </div>
             <div class="table-responsive">
                 <table class="table table-bordered" id="data" style="width: 100%;">
                     <thead>
@@ -128,15 +135,9 @@
                     </tbody>
                 </table>
             </div>
+            <div class="row justify-content-end p-2">
+                {{ $companies->links() }}
+            </div>
         </div>
     </div>
 @endsection
-
-
-@push('scripts')
-    <script>
-        $(document).ready( function () {
-            $('#data').DataTable();
-        });
-    </script>
-@endpush

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Company;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CompanyController extends Controller
 {
@@ -15,11 +16,15 @@ class CompanyController extends Controller
      */
     public function index(Request $request)
     {
-        $search = $request->search;
+        $search = strtolower($request->search);
 
-        $companies = Company::with(['latest_price','subsector.sector'])
-            ->orderBy('symbol')
-            ->get();
+        $companies = Company::with(['latest_price','subsector.sector']);
+
+        if ($search) {
+            $companies = $companies->where(DB::raw('LOWER(symbol)'), 'like', '%' . $search . '%');
+        }
+
+        $companies = $companies->orderBy('symbol')->paginate();
 
         return view('companies.index', compact('companies'));
     }
