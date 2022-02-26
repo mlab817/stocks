@@ -21,6 +21,8 @@ class HistoricalPrice extends Model
     public const WATCH      = 'watch';
     public const HOLD       = 'hold';
 
+    protected $touches = ['company'];
+
     protected $fillable = [
         'company_id',
         'date',
@@ -55,7 +57,7 @@ class HistoricalPrice extends Model
     ];
 
     protected $casts = [
-        'date' => 'timestamp',
+//        'date' => 'timestamp',
         'open' => 'float',
         'high' => 'float',
         'low' => 'float',
@@ -79,7 +81,7 @@ class HistoricalPrice extends Model
         'ema_9' => 'float',
     ];
 
-    public function company()
+    public function company(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Company::class);
     }
