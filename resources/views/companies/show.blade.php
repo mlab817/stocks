@@ -32,7 +32,7 @@
                     <tbody>
                     @foreach($prices->sortByDesc('date') as $price)
                         <tr>
-                            <td>{{ \Carbon\Carbon::createFromTimestamp($price->date)->format('M d, Y') }}</td>
+                            <td>{{ $price->date }}</td>
                             <td>{{ number_format($price->open, 2) }}</td>
                             <td>{{ number_format($price->high, 2) }}</td>
                             <td>{{ number_format($price->low, 2) }}</td>

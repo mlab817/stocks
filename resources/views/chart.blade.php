@@ -37,13 +37,15 @@
                 i = 0;
 
             for (i; i < dataLength; i += 1) {
+                const date = Date.parse(data[i].date)
+                console.log(date)
                 alma.push([
-                    data[i].date * 1000, // the date
+                    date, // the date
                     data[i].alma, // open
                 ])
 
                 ohlc.push([
-                    data[i].date * 1000, // the date
+                    date, // the date
                     data[i].open, // open
                     data[i].high, // high
                     data[i].low, // low
@@ -51,7 +53,7 @@
                 ]);
 
                 value.push([
-                    data[i].date * 1000, // the date
+                    date, // the date
                     data[i].value // the volume
                 ]);
             }
