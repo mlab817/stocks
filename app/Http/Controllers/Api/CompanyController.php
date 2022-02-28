@@ -17,7 +17,7 @@ class CompanyController extends Controller
     public function index()
     {
         $companies = Company::with('subsector.sector')
-            ->select('id','symbol','updated_at')
+//            ->select('id','symbol','updated_at')
             ->active()
             ->get();
 
