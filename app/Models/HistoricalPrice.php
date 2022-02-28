@@ -79,6 +79,8 @@ class HistoricalPrice extends Model
         'trix' => 'float',
         'psar' => 'float',
         'ema_9' => 'float',
+        'lag_macd_hist' => 'float',
+        'pct_change' => 'float',
     ];
 
     public function company(): \Illuminate\Database\Eloquent\Relations\BelongsTo
