@@ -60,6 +60,7 @@ class CompanyController extends Controller
                 ->orderByDesc('date')
                 ->limit(200)
                 ->get(),
+            'indicators' => HistoricalPrice::orderByDesc('date')->first()
         ]);
     }
 
