@@ -54,7 +54,7 @@ class CompanyController extends Controller
     public function show(Company $company)
     {
         return response()->json([
-            'basicInformation' => $company->with('subsector.sector'),
+            'basicInformation' => $company->load('subsector.sector'),
             'data' => HistoricalPrice::select('date','open','high','low','close','value')
                 ->where('company_id', $company->id)
                 ->orderByDesc('date')
