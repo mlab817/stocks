@@ -21,7 +21,9 @@ class MamaController extends Controller
             ->select(DB::raw('MAX(date) AS latest_date'))
             ->first();
 
-        $prices = HistoricalPrice::with('company')->where('date', $latestDate->latest_date)->get();
+        $prices = HistoricalPrice::with('company')
+            ->where('date', $latestDate->latest_date)
+            ->get();
 
 //        $prices = $prices->filter(function($price) {
 //            return $price->recommendation == HistoricalPrice::BUY

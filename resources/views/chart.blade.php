@@ -38,7 +38,7 @@
 
             for (i; i < dataLength; i += 1) {
                 const date = Date.parse(data[i].date)
-                console.log(date)
+                
                 alma.push([
                     date, // the date
                     data[i].alma, // open

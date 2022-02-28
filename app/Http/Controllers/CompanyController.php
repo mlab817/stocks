@@ -109,7 +109,7 @@ class CompanyController extends Controller
 
     public function fundamentals(Request $request)
     {
-        $companies = Company::with('market_statistic','subsector.sector','latest_price')->get();
+        $companies = Company::with('market_statistic','subsector.sector','latest_price')->paginate();
 
         return view('fundamentals', compact('companies'));
     }
