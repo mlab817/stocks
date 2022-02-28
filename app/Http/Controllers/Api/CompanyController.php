@@ -16,7 +16,8 @@ class CompanyController extends Controller
      */
     public function index()
     {
-        $companies = Company::select('id','symbol','updated_at')
+        $companies = Company::with('subsector.sector')
+            ->select('id','symbol','updated_at')
             ->active()
             ->get();
 
@@ -53,7 +54,7 @@ class CompanyController extends Controller
     public function show(Company $company)
     {
         return response()->json([
-            'company' => $company,
+            'basicInformation' => $company->with('subsector.sector'),
             'data' => HistoricalPrice::select('date','open','high','low','close','value')
                 ->where('company_id', $company->id)
                 ->orderByDesc('date')

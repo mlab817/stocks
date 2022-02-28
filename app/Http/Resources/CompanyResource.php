@@ -20,6 +20,7 @@ class CompanyResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'symbol' => $this->symbol,
+            'subsector' => $this->subsector->name ?? '',
             'prices' => HistoricalPriceResource::collection($this->whenLoaded('prices')),
             'indicators' => IndicatorResource::collection($this->whenLoaded('prices')),
         ];
