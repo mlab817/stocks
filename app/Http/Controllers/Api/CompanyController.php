@@ -55,7 +55,7 @@ class CompanyController extends Controller
     {
         return response()->json([
             'basicInformation' => $company->load('subsector.sector'),
-            'prices' => HistoricalPrice::select('date','open','high','low','close','value')
+            'prices' => HistoricalPrice::select('date','open','high','low','close','value','alma')
                 ->where('company_id', $company->id)
                 ->orderByDesc('date')
                 ->limit(200)
