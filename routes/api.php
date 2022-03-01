@@ -41,3 +41,5 @@ Route::post('/search', function (Request $request) {
 Route::resource('historical_prices', \App\Http\Controllers\Api\HistoricalPriceController::class);
 
 Route::resource('companies', \App\Http\Controllers\Api\CompanyController::class);
+
+Route::get('/mama', \App\Http\Controllers\Api\MamaController::class)->name('api.mama');
