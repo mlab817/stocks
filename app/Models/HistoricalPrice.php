@@ -83,6 +83,13 @@ class HistoricalPrice extends Model
         'pct_change' => 'float',
     ];
 
+    protected $appends = [
+        'candle',
+        'alma_direction',
+        'macd_direction',
+        'risk',
+    ];
+
     public function company(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Company::class);
