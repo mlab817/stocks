@@ -88,6 +88,7 @@ class HistoricalPrice extends Model
         'alma_direction',
         'macd_direction',
         'risk',
+        'recommendation',
     ];
 
     public function company(): \Illuminate\Database\Eloquent\Relations\BelongsTo
