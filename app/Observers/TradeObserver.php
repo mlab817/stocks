@@ -14,8 +14,15 @@ class TradeObserver
     public function saving(Trade $trade)
     {
         $base_cost = $trade->price * $trade->shares;
-        $commission = $base_cost * 0.0025;
-        $vat = $commission * 0.12;
+
+        if ($base_cost < 8000) {
+            $commission = 20;
+            $vat = 20 * 0.12;
+        } else {
+            $commission = $base_cost * 0.0025;
+            $vat = $commission * 0.12;
+        }
+
         $sccp_fee = $base_cost * 0.0001;
         $pse_fee = $base_cost * 0.00005;
 
