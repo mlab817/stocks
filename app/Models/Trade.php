@@ -74,12 +74,17 @@ class Trade extends Model
 
     public function getTotalCostAttribute()
     {
-        return $this->price * $this->shares
-            + $this->commission
+        $fees = $this->commission
             + $this->vat
             + $this->sales_tax
             + $this->sccp_fee
             + $this->pse_fee;
+
+        $base = $this->price * $this->shares;
+
+        return $this->trade_type == self::TRADE_TYPES[1]
+            ? $base - $fees
+            : $base + $fees;
     }
 
     public function getTotalFeesAttribute()
