@@ -60,9 +60,14 @@ class TradeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Trade $trade)
+    public function update(TradeRequest $request, Trade $trade)
     {
-        //
+        $trade->update($request->validated());
+
+        return response()->json([
+            'success' => true,
+            'data' => $trade
+        ]);
     }
 
     /**
