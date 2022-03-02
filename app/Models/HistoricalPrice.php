@@ -119,7 +119,9 @@ class HistoricalPrice extends Model
     public function getRiskAttribute()
     {
         // commission = 1.195
-        return ($this->close - $this->alma) / $this->close * 100 + 1.195;
+        return $this->close > 0
+            ? ($this->close - $this->alma) / $this->close * 100 + 1.195
+            : 0;
     }
 
     public function getMamaAttribute(): bool
