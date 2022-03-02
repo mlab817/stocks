@@ -78,6 +78,11 @@ class TradeController extends Controller
      */
     public function destroy(Trade $trade)
     {
-        //
+        $trade->delete();
+
+        return response()->json([
+            'success' => true,
+            'data' => null
+        ]);
     }
 }
