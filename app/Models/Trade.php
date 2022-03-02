@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Trade extends Model
@@ -33,15 +34,57 @@ class Trade extends Model
         'remarks',
     ];
 
-    public function company()
+    protected $casts = [
+        'company_id',
+        'shares' => 'int',
+        'date' => 'date:Y-m-d',
+        'price' => 'double',
+        'ave_cost' =>  'double',
+        'commission' =>  'double',
+        'vat' =>  'double',
+        'sales_tax' =>  'double',
+        'sccp_fee' =>  'double',
+        'pse_fee' =>  'double',
+        'target_price' => 'double',
+        'cut_loss' => 'double',
+        'total_cost' => 'double',
+        'total_fees' => 'double',
+    ];
+
+    protected $appends = [
+        'total_cost',
+        'total_fees'
+    ];
+
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+        'deleted_at',
+    ];
+
+    public function company(): BelongsTo
     {
         return $this->belongsTo(Company::class);
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
     }
 
     public function getTotalCostAttribute()
     {
         return $this->price * $this->shares
             + $this->commission
+            + $this->vat
+            + $this->sales_tax
+            + $this->sccp_fee
+            + $this->pse_fee;
+    }
+
+    public function getTotalFeesAttribute()
+    {
+        return $this->commission
             + $this->vat
             + $this->sales_tax
             + $this->sccp_fee

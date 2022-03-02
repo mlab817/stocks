@@ -42,4 +42,6 @@ Route::resource('historical_prices', \App\Http\Controllers\Api\HistoricalPriceCo
 
 Route::resource('companies', \App\Http\Controllers\Api\CompanyController::class);
 
+Route::apiResource('trades', \App\Http\Controllers\Api\TradeController::class);
+
 Route::get('/mama', \App\Http\Controllers\Api\MamaController::class)->name('api.mama');
