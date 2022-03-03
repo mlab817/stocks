@@ -32,6 +32,8 @@ class Trade extends Model
         'target_price',
         'cut_loss',
         'remarks',
+        'debit',
+        'credit'
     ];
 
     protected $casts = [
@@ -49,6 +51,8 @@ class Trade extends Model
         'cut_loss' => 'double',
         'total_cost' => 'double',
         'total_fees' => 'double',
+        'debit' => 'double',
+        'credit' => 'double',
     ];
 
     protected $appends = [

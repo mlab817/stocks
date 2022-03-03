@@ -37,6 +37,15 @@ class TradeObserver
         $trade->sccp_fee    = $sccp_fee;
         $trade->pse_fee     = $pse_fee;
         $trade->sales_tax   = $sales_tax;
+
+        $fees = $commission + $vat + $sccp_fee + $pse_fee + $sales_tax;
+
+        if ($trade->trade_type == 'sell') {
+            $trade->debit = ($base_cost + $fees) * -1;
+        } else {
+            $trade->credit = ($base_cost - $fees);
+        }
+
         $trade->user_id     = auth()->id();
     }
 
