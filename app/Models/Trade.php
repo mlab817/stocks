@@ -12,6 +12,10 @@ class Trade extends Model
     use HasFactory;
     use SoftDeletes;
 
+    public const SELL = 'sell';
+
+    public const BUY = 'buy';
+
     public const TRADE_TYPES = [
         'buy',
         'sell',

@@ -43,6 +43,11 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function portfolios(): HasMany
+    {
+        return $this->hasMany(Portfolio::class);
+    }
+
     public function trades(): HasMany
     {
         return $this->hasMany(Trade::class);

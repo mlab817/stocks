@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Company;
+use App\Models\Portfolio;
 use App\Models\Trade;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -60,7 +61,47 @@ class TradeController extends Controller
             'remarks' => 'nullable',
         ]);
 
+        // validate first if transaction is sell
+        if ($request->trade_type == 'sell') {
+            $portfolio = auth()->user()->portfolios()->where('company_id', $request->company_id)->first();
+
+            if (! $portfolio) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'You do not own shares from this stock'
+                ], 200);
+            }
+
+            if ($portfolio->shares < $request->shares) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'You do not own sufficient shares for that transaction',
+                ]);
+            }
+        }
+
         Trade::create($request->all());
+
+        if ($request->trade_type == 'sell') {
+            $portfolio = auth()->user()->portfolios()->where('company_id', $request->company_id)->first();
+
+            $portfolio->update([
+                'shares' => $portfolio->shares - $request->shares
+            ]);
+        } else {
+            $portfolio = auth()->user()->portfolios()->where('company_id', $request->company_id)->first();
+
+            if ($portfolio) {
+                $portfolio->update([
+                    'shares' => $portfolio->shares + $request->shares
+                ]);
+            } else {
+                auth()->user()->portfolios()->save(new Portfolio([
+                    'company_id' => $request->company_id,
+                    'shares' => $request->shares
+                ]));
+            }
+        }
 
         if (! auth()->user()->watchlists()->where('company_id', $request->company_id)->exists()) {
             // add to watchlist
