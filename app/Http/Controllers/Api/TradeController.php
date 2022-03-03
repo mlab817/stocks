@@ -54,14 +54,14 @@ class TradeController extends Controller
                 return response()->json([
                     'success' => false,
                     'message' => 'You do not own shares from this stock'
-                ], 200);
+                ], 422);
             }
 
             if ($portfolio->shares < $request->shares) {
                 return response()->json([
                     'success' => false,
                     'message' => 'You do not own sufficient shares for that transaction',
-                ]);
+                ], 422);
             }
         }
 
