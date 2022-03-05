@@ -27,7 +27,7 @@ class AddDebitCreditColumnsToTradesTable extends Migration
     public function down()
     {
         Schema::table('trades', function (Blueprint $table) {
-            //
+            $table->dropColumn(['debit','credit']);
         });
     }
 }
