@@ -30,7 +30,7 @@ class AuthController extends Controller
 
         $user = User::create($request->toArray());
 
-        $token = $user->createToken('Stocks Password Grant Client')->accessToken;
+        $token = $user->createToken('Personal Access Token')->accessToken;
 
         $response = ['token' => $token];
 
