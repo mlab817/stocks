@@ -14,9 +14,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
+Route::get('/user', function (Request $request) {
     return response()->json(['user' => $request->user()]);
-});
+})->middleware('auth:api');
 
 Route::get('/companies/{company}/historical_prices', function ($company) {
     $company = \App\Models\Company::where('symbol', $company)->first();
