@@ -15,6 +15,7 @@ class HistoricalPriceResource extends JsonResource
     public function toArray($request)
     {
         return [
+            'symbol' => $this->company->symbol,
             'date'  => $this->date,
             'open'  => $this->open,
             'high'  => $this->high,
