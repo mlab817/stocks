@@ -84,6 +84,7 @@ class HistoricalPrice extends Model
         'pct_change' => 'float',
         'alma_dir' => 'int',
         'macd_dir' => 'int',
+        'candle' => 'int'
     ];
 
 //    protected $appends = [
@@ -156,7 +157,7 @@ class HistoricalPrice extends Model
             : 0;
     }
 
-    public function getCandleAttribute(): string
+    public function getCandleAttribute(): int
     {
         if ($this->open > $this->close) {
             return self::BEARISH;
