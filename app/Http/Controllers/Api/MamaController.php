@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\HistoricalPriceResource;
 use App\Models\HistoricalPrice;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -21,9 +22,9 @@ class MamaController extends Controller
             ->select(DB::raw('MAX(date) AS latest_date'))
             ->first();
 
-        $prices = HistoricalPrice::with('company')
+        $prices = HistoricalPriceResource::collection(HistoricalPrice::with('company')
             ->where('date', $latestDate->latest_date)
-            ->get();
+            ->get());
 
         return response()->json([
             'prices'        => $prices,
