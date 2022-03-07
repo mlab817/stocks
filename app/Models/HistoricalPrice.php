@@ -82,6 +82,8 @@ class HistoricalPrice extends Model
         'ema_9' => 'float',
         'lag_macd_hist' => 'float',
         'pct_change' => 'float',
+        'alma_dir' => 'int',
+        'macd_dir' => 'int',
     ];
 
 //    protected $appends = [
@@ -167,7 +169,7 @@ class HistoricalPrice extends Model
         return self::NEUTRAL;
     }
 
-    public function getAlmaDirectionAttribute(): string
+    public function getAlmaDirAttribute(): int
     {
         if ($this->alma < $this->low) {
             return self::BULLISH;
@@ -201,7 +203,7 @@ class HistoricalPrice extends Model
 
     }
 
-    public function getMacdDirectionAttribute(): string
+    public function getMacdDirAttribute(): int
     {
         $current    = $this->macd_hist;
         $lagged     = $this->lag_macd_hist;
@@ -218,13 +220,13 @@ class HistoricalPrice extends Model
         return self::NEUTRAL;
     }
 
-    public function getRecommendationAttribute(): string
+    public function getMamaSignalAttribute(): string
     {
-        if ($this->alma_direction == self::BULLISH && $this->macd_direction == self::BULLISH) {
+        if ($this->alma_dir == self::BULLISH && $this->macd_dir == self::BULLISH) {
             return self::BUY;
         }
 
-        if ($this->alma_direction == self::BEARISH && $this->macd_direction == self::BEARISH) {
+        if ($this->alma_dir == self::BEARISH && $this->macd_dir == self::BEARISH) {
             return self::SELL;
         }
 
