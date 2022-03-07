@@ -37,7 +37,7 @@ class HistoricalPriceController extends Controller
 
         $price = HistoricalPrice::create($request->validated());
 
-        $price->indicator()->create($request->all());
+//        $price->indicator()->create($request->all());
 
         if (! $price) {
             return response()->json([
