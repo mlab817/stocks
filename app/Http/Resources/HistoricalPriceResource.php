@@ -22,6 +22,7 @@ class HistoricalPriceResource extends JsonResource
             'low'   => $this->low,
             'close' => $this->close,
             'value' => $this->value,
+            'alma' => $this->alma,
             'alma_dir' => $this->alma_direction,
             'macd_dir' => $this->macd_direction,
             'recommendation' => $this->recommendation,
