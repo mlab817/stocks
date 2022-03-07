@@ -18,10 +18,12 @@ Route::get('/user', function (Request $request) {
     return response()->json(['user' => $request->user()]);
 })->middleware('auth:api');
 
+Route::get('/stockData', \App\Http\Controllers\Api\CompanyPriceController::class);
+
 Route::get('/companies/{company}/historical_prices', function ($company) {
     $company = \App\Models\Company::where('symbol', $company)->first();
 
-    return response()->json($company->prices()->select('date','open','high','low','close','value','alma')->orderBy('date','asc')->get());
+    return response()->json($company->prices()->select('date','open','high','low','close','value')->orderBy('date')->get());
 })->name('get_prices');
 
 Route::get('/companies/{company}', function ($company) {

@@ -84,13 +84,13 @@ class HistoricalPrice extends Model
         'pct_change' => 'float',
     ];
 
-    protected $appends = [
-        'candle',
-        'alma_direction',
-        'macd_direction',
-        'risk',
-        'recommendation',
-    ];
+//    protected $appends = [
+//        'candle',
+//        'alma_direction',
+//        'macd_direction',
+//        'risk',
+//        'recommendation',
+//    ];
 
     public function company(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
