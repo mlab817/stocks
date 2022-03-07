@@ -14,9 +14,9 @@ class HistoricalPrice extends Model
     use HasFactory;
     use SoftDeletes;
 
-    public const NEUTRAL    = 'neutral';
-    public const BULLISH    = 'bullish';
-    public const BEARISH    = 'bearish';
+    public const NEUTRAL    = 0;
+    public const BULLISH    = 1;
+    public const BEARISH    = -1;
     public const BUY        = 'buy';
     public const SELL       = 'sell';
     public const WATCH      = 'watch';
