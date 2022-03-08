@@ -32,14 +32,6 @@ Route::get('/companies/{company}', function ($company) {
     return new \App\Http\Resources\CompanyResource($company->load('prices'));
 });
 
-Route::post('/search', function (Request $request) {
-    $search = strtolower($request->search);
-
-    $companies = \App\Models\Company::where(\Illuminate\Support\Facades\DB::raw('LOWER(symbol)'),'like', $search . '%')->select('symbol','name')->get();
-
-    return response()->json($companies);
-})->name('api.search');
-
 Route::resource('historical_prices', \App\Http\Controllers\Api\HistoricalPriceController::class);
 
 Route::resource('companies', \App\Http\Controllers\Api\CompanyController::class);

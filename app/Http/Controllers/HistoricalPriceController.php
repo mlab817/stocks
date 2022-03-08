@@ -13,7 +13,7 @@ class HistoricalPriceController extends Controller
     {
         $prices = $company
             ->prices()
-            ->where(DB::raw('EXTRACT(YEAR FROM date)'), '>=', '2021')
+//            ->where(DB::raw('EXTRACT(YEAR FROM date)'), '>=', '2021')
             ->orderBy('date','asc')
             ->get();
 
