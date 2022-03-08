@@ -14,12 +14,22 @@ class CompanyController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $companies = Company::with('subsector.sector')
-//            ->select('id','symbol','updated_at')
-            ->active()
-            ->get();
+        $company = new Company;
+
+        // if q is sent
+        if ($request->q) {
+            $company = Company::search($request->q);
+        }
+
+        if ($request->sortBy) {
+            $company = $company->orderBy('name', $request->descending ? 'desc' : 'asc');
+        }
+
+        $companies = $company->paginate($request->perPage ?? 15);
+
+        $companies->load('subsector.sector');
 
         return response()->json($companies);
     }
@@ -96,5 +106,14 @@ class CompanyController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function stockList()
+    {
+        $companies = Company::select('symbol', 'name')
+            ->orderBy('symbol')
+            ->get();
+
+        return response()->json($companies);
     }
 }

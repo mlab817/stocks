@@ -10,10 +10,14 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Facades\DB;
+use Laravel\Scout\Searchable;
 
 class Company extends Model
 {
     use HasFactory;
+    use Searchable;
+
+    public bool $asYouType = false;
 
     protected $fillable = [
         'name',
@@ -22,11 +26,6 @@ class Company extends Model
         'psei',
         'active'
     ];
-
-    protected static function booted()
-    {
-        static::addGlobalScope(new ActiveScope);
-    }
 
     public function getRouteKeyName(): string
     {
@@ -110,5 +109,15 @@ class Company extends Model
     public function scopeActive($query)
     {
         $query->where('active', true);
+    }
+
+    public function toSearchableArray()
+    {
+        $array = $this->toArray();
+
+        $array['subsector'] = $this->subsector ? $this->subsector->label: '';
+        $array['sector'] = $this->subsector ? $this->subsector->sector->label: '';
+
+        return $array;
     }
 }
