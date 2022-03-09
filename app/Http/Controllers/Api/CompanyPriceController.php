@@ -21,8 +21,6 @@ class CompanyPriceController extends Controller
             return response()->json(['message' => 'Stock symbol is required'], 404);
         }
 
-//        $start_date = $request->start_date ?? Carbon::now()->subYear()->format('Y-m-d');
-
         $company = Company::findBySymbol($symbol);
 
         $prices = $company->prices();

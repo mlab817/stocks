@@ -39,10 +39,12 @@ Route::resource('companies', \App\Http\Controllers\Api\CompanyController::class)
 Route::apiResource('trades', \App\Http\Controllers\Api\TradeController::class);
 
 Route::get('/mama', \App\Http\Controllers\Api\MamaController::class)->name('api.mama');
-Route::get('/portfolio', \App\Http\Controllers\Api\PortfolioController::class);
+Route::resource('/portfolios', \App\Http\Controllers\Api\PortfolioController::class);
 
 Route::post('/login', [\App\Http\Controllers\Api\AuthController::class, 'login']);
 Route::post('/register', [\App\Http\Controllers\Api\AuthController::class, 'register']);
 Route::post('/logout', [\App\Http\Controllers\Api\AuthController::class, 'logout'])->middleware('auth:api');
 
 Route::get('/stockList', [\App\Http\Controllers\Api\CompanyController::class,'stockList']);
+
+Route::get('/getStockList'. [\App\Http\Controllers\Api\PythonController::class,'getStockList']);

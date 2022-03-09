@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Services\CalculateCostService;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -13,7 +14,9 @@ class Portfolio extends Model
     protected $fillable = [
         'user_id',
         'company_id',
-        'shares'
+        'shares',
+        'price',
+        'total_cost',
     ];
 
     // contains users shares per company

@@ -1,28 +1,24 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use App\Models\CashTransaction;
 use Illuminate\Http\Request;
 
 class CashTransactionController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:api');
+    }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function index(Request $request)
     {
         //
     }
@@ -45,17 +41,6 @@ class CashTransactionController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(CashTransaction $cashTransaction)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\CashTransaction  $cashTransaction
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(CashTransaction $cashTransaction)
     {
         //
     }
