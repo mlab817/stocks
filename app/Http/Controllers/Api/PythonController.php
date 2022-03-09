@@ -10,6 +10,6 @@ class PythonController extends Controller
 {
     public function getStockList()
     {
-        return response()->json(Company::all);
+        return response()->json(Company::all());
     }
 }

@@ -47,4 +47,4 @@ Route::post('/logout', [\App\Http\Controllers\Api\AuthController::class, 'logout
 
 Route::get('/stockList', [\App\Http\Controllers\Api\CompanyController::class,'stockList']);
 
-Route::get('/getStockList'. [\App\Http\Controllers\Api\PythonController::class,'getStockList']);
+Route::get('/getStockList', [\App\Http\Controllers\Api\PythonController::class,'getStockList']);
