@@ -45,7 +45,7 @@ class PortfolioController extends Controller
 
         return response()->json([
             'message'   => 'Sucessfully added portfolio entry',
-            'portfolio' => $portfolio
+            'portfolio' => $portfolio->load('user', 'company')
         ]);
     }
 
@@ -64,7 +64,7 @@ class PortfolioController extends Controller
 
         return response()->json([
             'message'   => 'Sucessfully updated portfolio entry',
-            'portfolio' => $portfolio
+            'portfolio' => $portfolio->load('user', 'company')
         ]);
     }
 
