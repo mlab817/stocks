@@ -23,7 +23,7 @@ class PortfolioController extends Controller
      */
     public function index(Request $request)
     {
-        return response()->json(['portfolios'=>auth()->user()->portfolios->load('user','company')], 200);
+        return response()->json(['portfolios'=>auth()->user()->portfolios->load('user','company.latest_price')], 200);
     }
 
     public function store(Request $request, CalculateCostService $service)
