@@ -23,13 +23,11 @@ class PortfolioController extends Controller
      */
     public function index(Request $request)
     {
-        return response()->json(['portfolios'=>auth()->user()->portfolios], 200);
+        return response()->json(['portfolios'=>auth()->user()->portfolios->load('user','company')], 200);
     }
 
     public function store(Request $request, CalculateCostService $service)
     {
-        $company = Company::findBySymbol($request->symbol)->id;
-
         $request->validate([
             'company_id' => 'required|exists:companies,id',
             'shares'     => 'required|int|gt:0',
@@ -42,7 +40,7 @@ class PortfolioController extends Controller
             'company_id'    => $request->company_id,
             'shares'        => $request->shares,
             'price'         => $request->price,
-            'total_cost'    => $service->execute($request->shares, $request->price),
+            'total_cost'    => $request->shares * $request->price,
         ]);
 
         return response()->json([
@@ -61,7 +59,7 @@ class PortfolioController extends Controller
         $portfolio->update([
             'shares'        => $request->shares,
             'price'         => $request->price,
-            'total_cost'    => $service->execute($request->shares, $request->price),
+            'total_cost'    => $request->shares * $request->price,
         ]);
 
         return response()->json([

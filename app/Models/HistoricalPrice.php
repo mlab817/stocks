@@ -87,13 +87,14 @@ class HistoricalPrice extends Model
         'candle' => 'int'
     ];
 
-//    protected $appends = [
+    protected $appends = [
+        'mama_signal',
 //        'candle',
 //        'alma_direction',
 //        'macd_direction',
 //        'risk',
 //        'recommendation',
-//    ];
+    ];
 
     public function company(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
