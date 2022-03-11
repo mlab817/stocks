@@ -17,10 +17,9 @@ class HistoricalPrice extends Model
     public const NEUTRAL    = 0;
     public const BULLISH    = 1;
     public const BEARISH    = -1;
-    public const BUY        = 'buy';
-    public const SELL       = 'sell';
-    public const WATCH      = 'watch';
-    public const HOLD       = 'hold';
+    public const BUY        = 1;
+    public const SELL       = -1;
+    public const HOLD       = 0;
 
     protected $touches = ['company'];
 
