@@ -48,3 +48,24 @@ Route::post('/logout', [\App\Http\Controllers\Api\AuthController::class, 'logout
 Route::get('/stockList', [\App\Http\Controllers\Api\CompanyController::class,'stockList']);
 
 Route::get('/getStockList', [\App\Http\Controllers\Api\PythonController::class,'getStockList']);
+
+Route::get('/latestPrice', function () {
+    $maxDate = \Illuminate\Support\Facades\DB::table('historical_prices')->selectRaw('MAX(date) as last_date')->first();
+    $prices = \Illuminate\Support\Facades\DB::table('historical_prices as a')
+        ->select('b.symbol', 'a.company_id', 'a.close')
+        ->where('date','=', $maxDate->last_date)
+        ->join('companies as b','a.company_id','=','b.id')
+        ->get()
+        ->map(function ($p) {
+            return [
+                'symbol' => $p->symbol,
+                'company_id' => $p->company_id,
+                'close' => floatval($p->close),
+            ];
+        });
+
+    return response()->json([
+        'lastDate' => $maxDate->last_date,
+        'prices' => $prices
+    ]);
+});
