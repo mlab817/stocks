@@ -83,7 +83,8 @@ class HistoricalPrice extends Model
         'pct_change' => 'float',
         'alma_dir' => 'int',
         'macd_dir' => 'int',
-        'candle' => 'int'
+        'candle' => 'int',
+        'mama_signal' => 'int'
     ];
 
     protected $appends = [
