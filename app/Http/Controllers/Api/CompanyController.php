@@ -109,7 +109,7 @@ class CompanyController extends Controller
 
     public function stockList()
     {
-        $companies = Company::select('symbol', 'name')
+        $companies = Company::select('id','symbol', 'name')
             ->orderBy('symbol')
             ->get();
 

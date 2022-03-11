@@ -18,3 +18,11 @@ Route::redirect('/', '/home');
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::get('/test', function () {
+    $company = \App\Models\Company::query()
+        ->select('id','name')
+        ->get();
+
+    return $company;
+});
