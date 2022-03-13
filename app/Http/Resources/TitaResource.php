@@ -22,6 +22,7 @@ class TitaResource extends JsonResource
             'low'   => $this->low,
             'close' => $this->close,
             'value' => $this->value,
+            'alma'  => $this->alma,
             'candle' => $this->candle,
             'rsi' => $this->rsi,
             'alma_dir' => $this->alma_dir,
