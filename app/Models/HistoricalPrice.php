@@ -201,7 +201,7 @@ class HistoricalPrice extends Model
 
     public function getRsiDirAttribute(): int
     {
-        $rsi = round($this->rsi);
+        $rsi = round($this->rsi, 0);
 
         if ($rsi == 50 || $rsi == 55) {
             return self::BULLISH;
