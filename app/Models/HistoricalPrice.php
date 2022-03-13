@@ -106,26 +106,6 @@ class HistoricalPrice extends Model
         return $this->hasOne(Indicator::class);
     }
 
-    public function getAlmaBullishAttribute(): bool
-    {
-        return $this->low > $this->alma;
-    }
-
-    public function getAlmaCrossAttribute(): bool
-    {
-        return $this->open <= $this->alma
-            && $this->close > $this->alma;
-    }
-
-    public function getMacdBullishAttribute(): bool
-    {
-        $pct = $this->macd > 0
-            ? $this->macd_hist / $this->macd
-            : 0;
-
-        return abs($pct) <= 0.10;
-    }
-
     public function getRiskAttribute()
     {
         // commission = 1.195
@@ -134,23 +114,6 @@ class HistoricalPrice extends Model
                 ? ($this->close - $this->alma) / $this->close * 100 + 1.195
                 : 0)
             : null;
-    }
-
-    public function getMamaAttribute(): bool
-    {
-        // alma cross or alma bullish && macd_hist between 0.01
-        return ($this->alma_cross || $this->alma_bullish)
-            && $this->macd_bullish;
-    }
-
-    public function getRiskBullishAttribute(): bool
-    {
-        return floatval($this->risk) < 5;
-    }
-
-    public function getValueBullishAttribute(): bool
-    {
-        return $this->value > 10 **6;
     }
 
     public function getVolumeAttribute(): int
@@ -204,7 +167,6 @@ class HistoricalPrice extends Model
         }
 
         return self::NEUTRAL;
-
     }
 
     public function getMacdDirAttribute(): int
@@ -231,6 +193,30 @@ class HistoricalPrice extends Model
         }
 
         if ($this->alma_dir == self::BEARISH && $this->macd_dir == self::BEARISH) {
+            return self::SELL;
+        }
+
+        return self::HOLD;
+    }
+
+    public function getRsiDirAttribute(): int
+    {
+        $rsi = round($this->rsi);
+
+        if ($rsi == 50 || $rsi == 55) {
+            return self::BULLISH;
+        }
+
+        return self::NEUTRAL;
+    }
+
+    public function getTitaSignalAttribute(): string
+    {
+        if ($this->alma_dir == self::BULLISH && $this->rsi_dir == self::BULLISH) {
+            return self::BUY;
+        }
+
+        if ($this->alma_dir == self::BEARISH) {
             return self::SELL;
         }
 

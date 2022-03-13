@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Resources\HistoricalPriceResource;
+use App\Models\HistoricalPrice;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -67,5 +70,20 @@ Route::get('/latestPrice', function () {
     return response()->json([
         'lastDate' => $maxDate->last_date,
         'prices' => $prices
+    ]);
+});
+
+Route::get('/tita', function () {
+    $latestDate = \Illuminate\Support\Facades\DB::table('historical_prices')
+        ->select(DB::raw('MAX(date) AS latest_date'))
+        ->first();
+
+    $prices = \App\Http\Resources\TitaResource::collection(HistoricalPrice::with('company')
+        ->where('date', $latestDate->latest_date)
+        ->get());
+
+    return response()->json([
+        'prices'        => $prices,
+        'latestDate'    => $latestDate->latest_date
     ]);
 });
