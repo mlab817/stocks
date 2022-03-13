@@ -26,7 +26,7 @@ class TitaResource extends JsonResource
             'candle' => $this->candle,
             'rsi' => $this->rsi,
             'alma_dir' => $this->alma_dir,
-            'rsi_dir' => $this->macd_dir,
+            'rsi_dir' => $this->rsi_dir,
             'tita_signal' => $this->tita_signal,
         ];
     }
