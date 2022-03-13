@@ -186,7 +186,7 @@ class HistoricalPrice extends Model
         return self::NEUTRAL;
     }
 
-    public function getMamaSignalAttribute(): string
+    public function getMamaSignalAttribute(): int
     {
         if ($this->alma_dir == self::BULLISH && $this->macd_dir == self::BULLISH) {
             return self::BUY;
@@ -210,7 +210,7 @@ class HistoricalPrice extends Model
         return self::NEUTRAL;
     }
 
-    public function getTitaSignalAttribute(): string
+    public function getTitaSignalAttribute(): int
     {
         if ($this->alma_dir == self::BULLISH && $this->rsi_dir == self::BULLISH) {
             return self::BUY;
