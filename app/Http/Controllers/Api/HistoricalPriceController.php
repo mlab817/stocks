@@ -30,14 +30,17 @@ class HistoricalPriceController extends Controller
     {
         if (HistoricalPrice::where('company_id', $request->company_id)
             ->where('date', $request->date)->exists()) {
+
+            // update the timestamp
+            $company = Company::where('id', $request->company_id)->first();
+            $company->touch();
+
+
             return response()->json([
                 'success' => false,
                 'message' => 'Record already exists'
             ], 200);
         }
-
-        $company = Company::where('id', $request->company_id)->first();
-        $company->touch();
 
         $price = HistoricalPrice::create($request->validated());
 
