@@ -28,11 +28,12 @@ class HistoricalPriceController extends Controller
      */
     public function store(HistoricalPriceStoreRequest $request)
     {
+        $company = Company::where('id', $request->company_id)->first();
+
         if (HistoricalPrice::where('company_id', $request->company_id)
             ->where('date', $request->date)->exists()) {
 
             // update the timestamp
-            $company = Company::where('id', $request->company_id)->first();
             $company->touch();
 
 
@@ -43,6 +44,8 @@ class HistoricalPriceController extends Controller
         }
 
         $price = HistoricalPrice::create($request->validated());
+
+        $company->touch();
 
 //        $price->indicator()->create($request->all());
 
