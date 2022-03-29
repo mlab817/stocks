@@ -19,8 +19,33 @@
                 font-family: 'Nunito', sans-serif;
             }
         </style>
+
+        <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
+
+        <script>
+
+            // Enable pusher logging - don't include this in production
+            Pusher.logToConsole = true;
+
+            var pusher = new Pusher('43f35a023f84d4edd751', {
+                cluster: 'ap1'
+            });
+
+            var channel = pusher.subscribe('total-user-updated');
+            channel.bind('total-user-updated', function(data) {
+                // alert(JSON.stringify(data));
+                // do something about the data like change the relevant html based on the data
+                const { users } = data
+                const userCount = document.getElementById('users-count')
+                userCount.innerHTML = users;
+            });
+        </script>
     </head>
     <body class="antialiased">
+        <div>
+            User Count: <span id="users-count"></span>
+        </div>
+
         <div class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center py-4 sm:pt-0">
             @if (Route::has('login'))
                 <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">

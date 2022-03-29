@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\HistoricalPriceStoreRequest;
+use App\Models\Company;
 use App\Models\HistoricalPrice;
 use Illuminate\Http\Request;
 
@@ -34,6 +35,9 @@ class HistoricalPriceController extends Controller
                 'message' => 'Record already exists'
             ], 200);
         }
+
+        $company = Company::where('id', $request->company_id)->first();
+        $company->touch();
 
         $price = HistoricalPrice::create($request->validated());
 

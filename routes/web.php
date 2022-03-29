@@ -26,3 +26,8 @@ Route::get('/test', function () {
 
     return $company;
 });
+
+
+Route::get('/test', function () {
+    event(new \App\Events\TotalUserUpdated());
+});

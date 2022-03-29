@@ -34,6 +34,6 @@ class HomeController extends Controller
             $watchlists = auth()->user()->watchlists;
         }
 
-        return view('home', compact('companies','watchlists'));
+        return view('welcome', compact('companies','watchlists'));
     }
 }
