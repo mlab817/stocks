@@ -31,3 +31,4 @@ Route::get('/test', function () {
 Route::get('/test', function () {
     event(new \App\Events\TotalUserUpdated());
 });
+

@@ -87,3 +87,8 @@ Route::get('/tita', function () {
         'latestDate'    => $latestDate->latest_date
     ]);
 });
+
+Route::post('/calculate-indicators', function (\Illuminate\Http\Request $request) {
+    $service = new \App\Services\CalculateIndicatorsService($request->symbol);
+    return $service->execute();
+});
