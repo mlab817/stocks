@@ -8,6 +8,12 @@ use App\Models\Portfolio;
 use App\Models\Trade;
 use Illuminate\Http\Request;
 
+/**
+ * Trade and Portfolio
+ *
+ * Buy: Add shares to portfolio if existing, otherwise, create
+ * Sell: Subtract shares from portfolio if existing, otherwise, reject
+ */
 class TradeController extends Controller
 {
     public function __construct()
@@ -47,7 +53,7 @@ class TradeController extends Controller
         ]);
 
         // validate first if transaction is sell
-        if ($request->trade_type == 'sell') {
+        if ($request->trade_type == Trade::SELL) {
             $portfolio = auth()->user()->portfolios()->where('company_id', $request->company_id)->first();
 
             if (! $portfolio) {
@@ -67,7 +73,7 @@ class TradeController extends Controller
 
         $trade = Trade::create($request->all());
 
-        if ($request->trade_type == 'sell') {
+        if ($request->trade_type == Trade::SELL) {
             $portfolio = auth()->user()->portfolios()->where('company_id', $request->company_id)->first();
 
             $portfolio->update([
@@ -111,7 +117,7 @@ class TradeController extends Controller
      */
     public function show(Trade $trade)
     {
-        //
+        return response()->json($trade, 200);
     }
 
     /**

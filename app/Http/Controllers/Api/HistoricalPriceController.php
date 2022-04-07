@@ -70,7 +70,7 @@ class HistoricalPriceController extends Controller
      */
     public function show(HistoricalPrice $price)
     {
-        //
+        return response()->json($price, 200);
     }
 
     /**
@@ -80,9 +80,14 @@ class HistoricalPriceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, HistoricalPrice $price)
     {
-        //
+        $price->update($request->all());
+
+        return response()->json([
+            'success' => true,
+            'data' => $price
+        ], 200);
     }
 
     /**
@@ -91,8 +96,13 @@ class HistoricalPriceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(HistoricalPrice $price)
     {
-        //
+        $price->delete();
+
+        return response()->json([
+            'success' => true,
+            'data' => null
+        ], 200);
     }
 }

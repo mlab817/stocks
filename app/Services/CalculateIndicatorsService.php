@@ -24,7 +24,8 @@ class CalculateIndicatorsService
         $this->symbol = $symbol;
         $this->company = Company::findBySymbol($this->symbol);
 
-        $prices = $this->company->prices;
+        $prices = $this->company->prices->sortByDesc('date');
+        $prices = $prices->slice(0, 200);
         $this->prices = $this->sortDataByDateAsc(collect($prices));
         $this->arrayLength = count($this->prices);
         $this->macd = $this->calculateMacdIndicators();
