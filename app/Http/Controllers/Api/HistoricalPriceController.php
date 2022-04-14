@@ -34,7 +34,7 @@ class HistoricalPriceController extends Controller
             ->where('date', $request->date)->exists()) {
 
             // update the timestamp
-            $company->touch();
+            $company->last_price_date = $request->date;
 
 
             return response()->json([
@@ -45,7 +45,7 @@ class HistoricalPriceController extends Controller
 
         $price = HistoricalPrice::create($request->validated());
 
-        $company->touch();
+        $company->last_price_date = $request->date;
 
 //        $price->indicator()->create($request->all());
 

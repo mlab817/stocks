@@ -24,7 +24,8 @@ class Company extends Model
         'symbol',
         'listing_date',
         'psei',
-        'active'
+        'active',
+        'last_price_date',
     ];
 
     public function getRouteKeyName(): string

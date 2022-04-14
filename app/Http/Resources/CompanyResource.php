@@ -23,6 +23,7 @@ class CompanyResource extends JsonResource
             'subsector' => $this->subsector->name ?? '',
             'prices' => HistoricalPriceResource::collection($this->whenLoaded('prices')),
             'indicators' => IndicatorResource::collection($this->whenLoaded('prices')),
+            'last_price_date' => $this->last_price_date,
         ];
     }
 }
