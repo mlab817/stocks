@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\HistoricalPriceStoreRequest;
 use App\Models\Company;
 use App\Models\HistoricalPrice;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class HistoricalPriceController extends Controller
@@ -35,7 +36,7 @@ class HistoricalPriceController extends Controller
 
             // update the last_price_date
             $company->update([
-                'last_price_date' => $request->date
+                'last_price_date' => Carbon::now()->toDateString()
             ]);
 
             return response()->json([
